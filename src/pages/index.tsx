@@ -1,12 +1,15 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "gatsby";
+
 import ProTip from "../components/ProTip";
 import Layout from "../layout";
+import SEO from "../components/seo";
 
 const Index: React.FC = () => {
   return (
     <Layout>
+      <SEO title="about page" />
       <Typography variant="h4" component="h1" gutterBottom>
         Create React App v4-beta example with TypeScript{" "}
       </Typography>
