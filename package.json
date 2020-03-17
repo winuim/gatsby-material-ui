@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
     "@material-ui/styles": "latest",
     "@types/eslint": "^6.1.8",
     "@types/node": "^13.9.1",

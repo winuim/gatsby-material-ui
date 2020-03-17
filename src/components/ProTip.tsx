@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ProTip(): JSX.Element {
+const ProTip: React.FC = () => {
   const classes = useStyles();
   return (
     <Typography className={classes.root} color="textSecondary">
@@ -36,4 +36,6 @@ export default function ProTip(): JSX.Element {
       on the Material-UI documentation.
     </Typography>
   );
-}
+};
+
+export default ProTip;
