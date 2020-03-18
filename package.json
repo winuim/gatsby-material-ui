@@ -17,6 +17,7 @@
     "gatsby-plugin-graphql-codegen": "^2.5.0",
     "gatsby-plugin-manifest": "^2.2.48",
     "gatsby-plugin-material-ui": "latest",
+    "gatsby-plugin-netlify": "^2.1.35",
     "gatsby-plugin-offline": "^3.0.41",
     "gatsby-plugin-react-helmet": "latest",
     "gatsby-plugin-sharp": "^2.4.13",
@@ -53,9 +54,11 @@
     "prettier": "^1.19.1"
   },
   "scripts": {
+    "clean": "gatsby clean",
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
+    "start": "npm run develop",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   }
 }
