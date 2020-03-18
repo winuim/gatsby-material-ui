@@ -1,6 +1,6 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
 import { Link } from "gatsby";
+import Typography from "@material-ui/core/Typography";
 
 import ProTip from "../components/ProTip";
 import Layout from "../layout";
@@ -11,11 +11,14 @@ const Index: React.FC = () => {
     <Layout>
       <SEO title="index main" />
       <Typography variant="h4" component="h1" gutterBottom>
-        Create React App v4-beta example with TypeScript{" "}
+        Gatsby Material-UI with Typescript
       </Typography>
-      <Link to="/about" color="secondary">
-        Go to the about page
-      </Link>
+      <img src="https://source.unsplash.com/random/400x200" alt="" />
+      <Typography>
+        <Link to="/about" color="secondary">
+          Go to the about page
+        </Link>
+      </Typography>
       <ProTip />
     </Layout>
   );

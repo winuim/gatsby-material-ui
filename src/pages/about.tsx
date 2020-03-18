@@ -11,9 +11,11 @@ const About: React.FC = () => {
     <Layout>
       <SEO title="about page" />
       <Typography variant="h4" component="h1" gutterBottom>
-        Gatsby v4-beta example
+        About
       </Typography>
-      <Link to="/">Go to the main page</Link>
+      <Link to="/" color="secondary">
+        Go to the main page
+      </Link>
       <ProTip />
     </Layout>
   );

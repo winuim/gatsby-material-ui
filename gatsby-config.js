@@ -14,8 +14,8 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: "My page",
-    description: "Site Description"
+    title: "Gatsby Material UI Demo",
+    description: "Gatsby Material UI Demo + toggle DarkMode"
   },
   plugins: [
     "gatsby-plugin-typescript",
@@ -68,7 +68,7 @@ module.exports = {
         },
         loginPath: "/login",
         loginRedirectPath: "/dashboard",
-        socialLogins: ["google", "twitter", "facebook", "github"],
+        socialLogins: [],
       },
     },
     "gatsby-plugin-top-layout",
