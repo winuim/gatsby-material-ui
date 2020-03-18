@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet";
 import CssBaseline from "@material-ui/core/CssBaseline";
+// import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import initialTheme from "../../src/theme";
@@ -13,6 +14,16 @@ type Props = {
 };
 
 export default function TopLayout(props: Props): JSX.Element {
+  // const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  // const defaultTheme = React.useMemo(
+  //   () =>
+  //     createMuiTheme({
+  //       palette: {
+  //         type: prefersDarkMode ? "dark" : "light",
+  //       },
+  //     }),
+  //   [prefersDarkMode]
+  // );
   const [state, dispatch] = useReducer(themeReducer, initialThemeState);
   const { darkMode } = state;
   const theme = React.useMemo(() => {

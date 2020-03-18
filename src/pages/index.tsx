@@ -9,7 +9,7 @@ import SEO from "../components/seo";
 const Index: React.FC = () => {
   return (
     <Layout>
-      <SEO title="about page" />
+      <SEO title="index main" />
       <Typography variant="h4" component="h1" gutterBottom>
         Create React App v4-beta example with TypeScript{" "}
       </Typography>
