@@ -4,7 +4,7 @@ import { Link } from "gatsby";
 import ProTip from "../components/ProTip";
 import Layout from "../layout";
 import SEO from "../components/seo";
-import SignIn from "../templates/sign-in/signin";
+import SignIn from "../templates/sign-in/SignIn";
 
 const Signin: React.FC = () => {
   return (
