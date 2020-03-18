@@ -30,8 +30,8 @@ export default function TopLayout(props: Props): JSX.Element {
     return createMuiTheme({
       ...initialTheme,
       palette: {
-        primary: initialTheme.palette.primary,
-        secondary: initialTheme.palette.secondary,
+        // primary: initialTheme.palette.primary,
+        // secondary: initialTheme.palette.secondary,
         type: darkMode ? "dark" : "light",
       },
     });
