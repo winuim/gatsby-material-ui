@@ -7,7 +7,7 @@ import Copyright from "../components/Copyright";
 
 const Layout: React.FC = ({ children }) => {
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="xl">
       <Box my={4}>
         <DarkModeButton />
         <main>{children}</main>

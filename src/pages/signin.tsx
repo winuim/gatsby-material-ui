@@ -1,20 +1,15 @@
 import React from "react";
-import { Link } from "gatsby";
 
-import ProTip from "../components/ProTip";
-import Layout from "../layout";
 import SEO from "../components/seo";
 import SignIn from "../templates/sign-in/SignIn";
 
-const Signin: React.FC = () => {
+const SignInPage: React.FC = () => {
   return (
-    <Layout>
-      <SEO title="about page" />
+    <div>
+      <SEO title="signin page" />
       <SignIn />
-      <Link to="/">Go to the main page</Link>
-      <ProTip />
-    </Layout>
+    </div>
   );
 };
 
-export default Signin;
+export default SignInPage;
