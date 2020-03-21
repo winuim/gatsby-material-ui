@@ -18,6 +18,7 @@
     "babel-preset-gatsby": "^0.2.36",
     "gatsby": "latest",
     "gatsby-cli": "^2.10.11",
+    "gatsby-image": "^2.3.0",
     "gatsby-plugin-graphql-codegen": "^2.5.0",
     "gatsby-plugin-manifest": "^2.2.48",
     "gatsby-plugin-material-ui": "latest",
@@ -66,6 +67,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "start": "npm run develop",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
+    "debug": "node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop"
   }
 }
