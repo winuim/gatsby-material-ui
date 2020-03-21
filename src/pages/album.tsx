@@ -1,6 +1,6 @@
 import React from "react";
 
-import SEO from "../components/seo";
+import SEO from "../components/Seo";
 import Album from "../templates/album/Album";
 
 const AlbumPage: React.FC = () => {

@@ -8,24 +8,30 @@
 import React from "react";
 import Helmet from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
-import { SiteMetaQuery } from "../../types/graphql-types";
 
-const siteMetaQuery = graphql`
-  query SiteMeta {
-    site {
-      siteMetadata {
-        title
-        description
-      }
-    }
-  }
-`;
+interface Props {
+  site: {
+    siteMetadata: {
+      title: string;
+      description: string;
+    };
+  };
+}
 
 const SEO: React.FC<{ title?: string; description?: string }> = ({
   title,
   description,
 }) => {
-  const data: SiteMetaQuery = useStaticQuery(siteMetaQuery);
+  const data = useStaticQuery<Props>(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+          description
+        }
+      }
+    }
+  `);
 
   const metaDescription =
     description || data?.site?.siteMetadata?.description || "";

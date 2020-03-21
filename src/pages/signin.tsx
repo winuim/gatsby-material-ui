@@ -1,6 +1,6 @@
 import React from "react";
 
-import SEO from "../components/seo";
+import SEO from "../components/Seo";
 import SignIn from "../templates/sign-in/SignIn";
 
 const SignInPage: React.FC = () => {

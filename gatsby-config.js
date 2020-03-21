@@ -14,8 +14,9 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: "Gatsby Material UI Demo",
-    description: "Gatsby Material UI Demo + toggle DarkMode"
+    title: "Gatsby Material-UI Demo Site",
+    description: "Gatsby Material-UI Demo Site with Typescript",
+    url: "https://material-ui.com/"
   },
   plugins: [
     "gatsby-plugin-typescript",

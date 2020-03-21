@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 
 import ProTip from "../components/ProTip";
 import Layout from "../layout";
-import SEO from "../components/seo";
+import SEO from "../components/Seo";
 
 const Index: React.FC = () => {
   return (

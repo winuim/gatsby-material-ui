@@ -1,6 +1,6 @@
 import React from "react";
 
-import SEO from "../components/seo";
+import SEO from "../components/Seo";
 import Checkout from "../templates/checkout/Checkout";
 
 const CheckoutPage: React.FC = () => {

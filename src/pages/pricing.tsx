@@ -1,6 +1,6 @@
 import React from "react";
 
-import SEO from "../components/seo";
+import SEO from "../components/Seo";
 import Pricing from "../templates/pricing/Pricing";
 
 const PricingPage: React.FC = () => {

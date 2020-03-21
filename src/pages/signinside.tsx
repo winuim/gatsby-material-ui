@@ -1,6 +1,6 @@
 import React from "react";
 
-import SEO from "../components/seo";
+import SEO from "../components/Seo";
 import SignInSide from "../templates/sign-in-side/SignInSide";
 
 const SignInSidePage: React.FC = () => {

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const ProTip: React.FC = () => {
   const classes = useStyles();
   return (
-    <Typography className={classes.root} color="textSecondary">
+    <Typography className={classes.root} color="textSecondary" align="center">
       <LightBulbIcon className={classes.lightBulb} />
       Pro tip: See more{" "}
       <Link href="https://material-ui.com/getting-started/templates/">
