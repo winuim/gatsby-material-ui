@@ -74,7 +74,7 @@ export default function MyCalendar(props: Props): JSX.Element {
   return (
     <React.Fragment>
       <Paper className={fixedHeightPaper}>
-        <Title>Calendar</Title>
+        <Title>カレンダー</Title>
         <Calendar
           locale="ja-JP"
           calendarType="US"

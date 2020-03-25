@@ -138,6 +138,7 @@ export default function SignUpSide() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              href="/home"
             >
               Sign Up
             </Button>

@@ -14,17 +14,14 @@ import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./listItems";
-import Chart from "./Chart";
-import Deposits from "./Deposits";
-import Orders from "./Orders";
 import Copyright from "../../components/Copyright";
 import MyCalendar from "./Calendar";
 import MyTaskCard from "./TaskCard";
+import Orders from "./Orders";
 
 const drawerWidth = 240;
 
@@ -122,8 +119,6 @@ export default function Mypage() {
     setSelected(value);
     console.log(`handleOnClick ${value}`);
   };
-
-  console.log(location);
 
   return (
     <div className={classes.root}>
