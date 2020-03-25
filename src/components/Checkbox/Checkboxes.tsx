@@ -6,7 +6,6 @@ export default function Checkboxes() {
   const [checked, setChecked] = React.useState(true);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target);
     setChecked(event.target.checked);
   };
 

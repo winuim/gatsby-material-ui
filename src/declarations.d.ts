@@ -3,6 +3,7 @@
 
 // For example, to shim modules without declarations, use:
 // declare module "package-without-declarations"
+declare module "react-calendar"
 
 // And to shim assets, use (one file extension per `declare`):
 // declare module "*.png"

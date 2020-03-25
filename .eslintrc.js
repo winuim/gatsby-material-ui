@@ -25,6 +25,7 @@ module.exports = {
   'plugins': [
     'react',
     '@typescript-eslint',
+    "react-hooks"
   ],
   'globals': {
   },
@@ -119,5 +120,7 @@ module.exports = {
     'react/no-unused-state': 'error',
     // 中身が空のタグはself closingをさせる
     'react/self-closing-comp': 'error',
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn" // Checks effect dependencies
   }
 }
