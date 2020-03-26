@@ -5,8 +5,8 @@ import { format } from "date-fns";
 
 import Title from "./Title";
 import { isHoliday } from "./HolidayModel";
-import { WorkingDays } from "./UserModel";
-import { getWorkSiteInfo } from "./WorkSiteModel";
+import { UserWorkingDaysProps, filterWorking } from "./UserModel";
+import { WorkSiteProps, findWorkSite, getWorkSiteInfo } from "./WorkSiteModel";
 
 type ViewType = "month" | "year" | "decade" | "century";
 
@@ -18,6 +18,8 @@ interface TileProps {
 interface Props {
   value: Date;
   handleOnClickDay: (value: Date) => void;
+  workingDayModels: Array<UserWorkingDaysProps>;
+  workSiteModels: Array<WorkSiteProps>;
 }
 
 export default function MyCalendar(props: Props): JSX.Element {
@@ -37,16 +39,20 @@ export default function MyCalendar(props: Props): JSX.Element {
       return <p>{"  "}</p>;
     }
     const day = format(date, "yyyy-MM-dd");
-    if (WorkingDays[day]) {
-      const workday = WorkingDays[day];
+    const workingDayModels = filterWorking(day, props.workingDayModels);
+    if (workingDayModels.length > 0) {
       return (
         <p>
-          {workday.map((v) => {
-            const workSiteInfo = getWorkSiteInfo(v.workSiteId);
-            if (workSiteInfo) {
+          {workingDayModels.map((v) => {
+            const workSiteModel = findWorkSite(
+              v.workSiteId,
+              props.workSiteModels
+            );
+            if (workSiteModel) {
+              const workSiteInfo = getWorkSiteInfo(day, workSiteModel);
               return workSiteInfo.workSiteName;
             }
-            return "取得失敗";
+            return "error";
           })}
         </p>
       );

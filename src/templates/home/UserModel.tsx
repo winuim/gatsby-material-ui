@@ -1,4 +1,4 @@
-interface UserProfileModel {
+export interface UserProfileModel {
   userId: string;
   email: string;
   name: string;
@@ -17,11 +17,20 @@ interface UserProfileModel {
   memo?: string;
 }
 
-interface AvailableDayProps {
+export interface UserAvailableDayProps {
   [index: string]: boolean;
 }
 
-interface WorkingDayProps {
+export interface UserWorkingDaysProps {
+  date: string;
+  workSiteId: string;
+  departureTime?: Date;
+  workStartTime?: Date;
+  workEndTime?: Date;
+  breakTime?: string;
+}
+
+export interface WorkingDayProps {
   [index: string]: Array<{
     workSiteId: string;
     departureTime?: Date;
@@ -31,13 +40,23 @@ interface WorkingDayProps {
   }>;
 }
 
+export function filterWorking(
+  date: string,
+  models: UserWorkingDaysProps[]
+): UserWorkingDaysProps[] {
+  const result = models.filter((value) => {
+    return value.date === date;
+  });
+  return result;
+}
+
 export const MyProfileModel: UserProfileModel = {
   userId: "U0000000001",
   name: "フル ネーム",
   email: "test@example.com",
 };
 
-export const AvailableDays: AvailableDayProps = {
+export const MyAvailableDaysModel: UserAvailableDayProps = {
   "2020-03-30": true,
   "2020-03-31": true,
   "2020-04-01": true,
@@ -45,20 +64,8 @@ export const AvailableDays: AvailableDayProps = {
   "2020-04-03": true,
 };
 
-export const WorkingDays: WorkingDayProps = {
-  "2020-03-20": [
-    {
-      workSiteId: "W0000000001",
-    },
-  ],
-  "2020-03-30": [
-    {
-      workSiteId: "W0000000002",
-    },
-  ],
-  "2020-03-31": [
-    {
-      workSiteId: "W0000000002",
-    },
-  ],
-};
+export const MyWorkingDayModels: Array<UserWorkingDaysProps> = [
+  { date: "2020-03-20", workSiteId: "W0000000001" },
+  { date: "2020-03-30", workSiteId: "W0000000002" },
+  { date: "2020-03-31", workSiteId: "W0000000002" },
+];

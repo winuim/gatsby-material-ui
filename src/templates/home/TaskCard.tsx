@@ -7,8 +7,14 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { format } from "date-fns";
 
-import { WorkingDays } from "./UserModel";
-import { WorkSiteProps, getWorkSiteInfo } from "./WorkSiteModel";
+import { UserWorkingDaysProps, filterWorking } from "./UserModel";
+import {
+  WorkSiteProps,
+  WorkSiteInfoProps,
+  InitialWorkSiteInfo,
+  findWorkSite,
+  getWorkSiteInfo,
+} from "./WorkSiteModel";
 
 const useStyles = makeStyles({
   root: {
@@ -24,50 +30,63 @@ const useStyles = makeStyles({
 
 interface Props {
   value: Date;
+  workingDayModels: Array<UserWorkingDaysProps>;
+  workSiteModels: Array<WorkSiteProps>;
 }
 
-export default function MyTaskCard(props: Props) {
+export default function MyTaskCard(props: Props): JSX.Element {
   const classes = useStyles();
-  let workSiteInfo: (WorkSiteProps | undefined)[] = [];
+  let workSiteInfo: (WorkSiteInfoProps | undefined)[] = [InitialWorkSiteInfo];
+  let selectedWorkSiteModels: (WorkSiteProps | undefined)[] = [];
   const day = format(props.value, "yyyy-MM-dd");
-  if (WorkingDays[day]) {
-    const workday = WorkingDays[day];
-    workSiteInfo = workday.map(v => {
-      return getWorkSiteInfo(v.workSiteId);
+  const selectedWorkingDayModels = filterWorking(day, props.workingDayModels);
+  if (selectedWorkingDayModels.length > 0) {
+    selectedWorkSiteModels = selectedWorkingDayModels.map((v) => {
+      return findWorkSite(v.workSiteId, props.workSiteModels);
+    });
+    workSiteInfo = selectedWorkSiteModels.map((v) => {
+      if (v) {
+        return getWorkSiteInfo(day, v);
+      }
     });
   }
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          {day}のお仕事
-        </Typography>
-        <Typography variant="h5" component="h2">
-          {workSiteInfo[0] ? workSiteInfo[0].workSiteName : "現場はありません"}
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          業務予定時間:{" "}
-          {workSiteInfo[0] ? workSiteInfo[0].workingStartTime : "*"} 〜{" "}
-          {workSiteInfo[0] ? workSiteInfo[0].workingEndTime : "*"}
-        </Typography>
-        <Typography variant="body2" component="p">
-          集合場所: {workSiteInfo[0] ? workSiteInfo[0].meetingPlace : "*"}
+    <div>
+      {workSiteInfo.map((element, index) => (
+        <div key={index}>
+          <Card className={classes.root}>
+            <CardContent>
+              <Typography
+                className={classes.title}
+                color="textSecondary"
+                gutterBottom
+              >
+                {day}のお仕事
+              </Typography>
+              <Typography variant="h5" component="h2">
+                {element ? element.workSiteName : "現場はありません"}
+              </Typography>
+              <Typography className={classes.pos} color="textSecondary">
+                業務予定時間: {element ? element.workTime : "*"}
+              </Typography>
+              <Typography variant="body2" component="p">
+                集合場所: {element ? element.meetingPlace : "*"}
+                <br />
+                集合時間: {element ? element.meetingHours : "*"}
+                <br />
+                服装: {element ? element.clothes : "*"}
+                <br />
+                持ち物: {element ? element.bringItem : "*"}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small">詳細</Button>
+            </CardActions>
+          </Card>
           <br />
-          集合時間: {workSiteInfo[0] ? workSiteInfo[0].meetingHours : "*"}
-          <br />
-          服装: {workSiteInfo[0] ? workSiteInfo[0].clothes : "*"}
-          <br />
-          持ち物: {workSiteInfo[0] ? workSiteInfo[0].bringItem : "*"}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">詳細</Button>
-      </CardActions>
-    </Card>
+        </div>
+      ))}
+    </div>
   );
 }

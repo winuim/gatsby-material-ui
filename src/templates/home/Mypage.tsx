@@ -17,11 +17,15 @@ import Paper from "@material-ui/core/Paper";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+
 import { mainListItems, secondaryListItems } from "./listItems";
 import Copyright from "../../components/Copyright";
 import MyCalendar from "./Calendar";
 import MyTaskCard from "./TaskCard";
-import Orders from "./Orders";
+import MyBacklog from "./Backlog";
+
+import { MyWorkingDayModels } from "./UserModel";
+import { WorkSiteModels } from "./WorkSiteModel";
 
 const drawerWidth = 240;
 
@@ -117,7 +121,7 @@ export default function Mypage() {
   const [selected, setSelected] = useState(new Date());
   const handleOnClickDay = (value: Date): void => {
     setSelected(value);
-    console.log(`handleOnClick ${value}`);
+    // console.log(`handleOnClick ${value}`);
   };
 
   return (
@@ -182,19 +186,28 @@ export default function Mypage() {
                 <MyCalendar
                   value={selected}
                   handleOnClickDay={handleOnClickDay}
+                  workingDayModels={MyWorkingDayModels}
+                  workSiteModels={WorkSiteModels}
                 />
               </Paper>
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={7}>
               <Paper className={classes.paper}>
-                <MyTaskCard value={selected} />
+                <MyTaskCard
+                  value={selected}
+                  workingDayModels={MyWorkingDayModels}
+                  workSiteModels={WorkSiteModels}
+                />
               </Paper>
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders />
+                <MyBacklog
+                  workingDayModels={MyWorkingDayModels}
+                  workSiteModels={WorkSiteModels}
+                />
               </Paper>
             </Grid>
           </Grid>
