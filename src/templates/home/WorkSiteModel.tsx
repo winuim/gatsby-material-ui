@@ -7,8 +7,9 @@ export interface WorkSiteExtendProps {
   workStartTime?: string;
   workEndTime?: string;
   clothes?: string;
-  bringItem?: string;
+  items?: string;
   remarks?: string;
+  contactPrepare?: string;
   contactDeparture?: string;
   contactWorkStart?: string;
   constactWorkEnd?: string;
@@ -25,8 +26,9 @@ export interface WorkSiteProps {
   workStartTime?: string;
   workEndTime?: string;
   clothes?: string;
-  bringItem?: string;
+  items?: string;
   remarks?: string;
+  contactPrepare?: string;
   contactDeparture?: string;
   contactWorkStart?: string;
   constactWorkEnd?: string;
@@ -53,8 +55,9 @@ export interface WorkSiteInfoProps {
   meetingHours: string;
   workTime: string;
   clothes: string;
-  bringItem: string;
+  items: string;
   remarks: string;
+  contactPrepare: string;
   contactDeparture: string;
   contactWorkStart: string;
   constactWorkEnd: string;
@@ -70,8 +73,9 @@ export const InitialWorkSiteInfo: WorkSiteInfoProps = {
   meetingHours: "**:**",
   workTime: "**:** 〜 **:**",
   clothes: "****",
-  bringItem: "****",
+  items: "****",
   remarks: "****",
+  contactPrepare: "****",
   contactDeparture: "****",
   contactWorkStart: "****",
   constactWorkEnd: "****",
@@ -105,13 +109,17 @@ export function getWorkSiteInfo(
   if (extend && extend.clothes) {
     clothes = extend.clothes;
   }
-  let bringItem = model.bringItem;
-  if (extend && extend.bringItem) {
-    bringItem = extend.bringItem;
+  let items = model.items;
+  if (extend && extend.items) {
+    items = extend.items;
   }
   let remarks = model.remarks;
   if (extend && extend.remarks) {
     remarks = extend.remarks;
+  }
+  let contactPrepare = model.contactPrepare;
+  if (extend && extend.contactPrepare) {
+    contactPrepare = extend.contactPrepare;
   }
   let contactDeparture = model.contactDeparture;
   if (extend && extend.contactDeparture) {
@@ -143,8 +151,9 @@ export function getWorkSiteInfo(
       workEndTime ? workEndTime : "未定"
     }`,
     clothes: clothes ? clothes : "未定",
-    bringItem: bringItem ? bringItem : "未定",
+    items: items ? items : "未定",
     remarks: remarks ? remarks : "未定",
+    contactPrepare: contactPrepare ? contactPrepare : "未定",
     contactDeparture: contactDeparture ? contactDeparture : "未定",
     contactWorkStart: contactWorkStart ? contactWorkStart : "未定",
     constactWorkEnd: constactWorkEnd ? constactWorkEnd : "未定",
@@ -172,7 +181,7 @@ export const WorkSiteModels: Array<WorkSiteProps> = [
     meetingPlace: "集合場所A",
     meetingHours: "09:30",
     clothes: "服装A",
-    bringItem: "持ち物A",
+    items: "持ち物A",
     remarks: "特記事項A...",
     contactDeparture: "スタッフA",
     contactWorkStart: "スタッフB",

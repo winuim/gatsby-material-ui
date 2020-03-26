@@ -191,7 +191,6 @@ export default function Mypage() {
                 />
               </Paper>
             </Grid>
-            {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={7}>
               <Paper className={classes.paper}>
                 <MyTaskCard
@@ -201,7 +200,6 @@ export default function Mypage() {
                 />
               </Paper>
             </Grid>
-            {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <MyBacklog

@@ -1,9 +1,7 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { format } from "date-fns";
 
@@ -16,17 +14,19 @@ import {
   getWorkSiteInfo,
 } from "./WorkSiteModel";
 
-const useStyles = makeStyles({
-  root: {
-    minWidth: 275,
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      minWidth: 275,
+    },
+    title: {
+      fontSize: 14,
+    },
+    pos: {
+      marginBottom: 12,
+    },
+  })
+);
 
 interface Props {
   value: Date;
@@ -52,7 +52,7 @@ export default function MyTaskCard(props: Props): JSX.Element {
   }
 
   return (
-    <div>
+    <>
       {workSiteInfo.map((element, index) => (
         <div key={index}>
           <Card className={classes.root}>
@@ -72,21 +72,34 @@ export default function MyTaskCard(props: Props): JSX.Element {
               </Typography>
               <Typography variant="body2" component="p">
                 集合場所: {element ? element.meetingPlace : "*"}
-                <br />
+              </Typography>
+              <Typography variant="body2" component="p">
                 集合時間: {element ? element.meetingHours : "*"}
-                <br />
+              </Typography>
+              <Typography variant="body2" component="p">
                 服装: {element ? element.clothes : "*"}
-                <br />
-                持ち物: {element ? element.bringItem : "*"}
+              </Typography>
+              <Typography variant="body2" component="p">
+                持ち物: {element ? element.items : "*"}
+              </Typography>
+              <Typography variant="body2" component="p">
+                特記事項: {element ? element.remarks : "*"}
+              </Typography>
+              <Typography variant="body2" component="p">
+                準備開始、出発連絡は: {element ? element.contactWorkStart : "*"}
+              </Typography>
+              <Typography variant="body2" component="p">
+                到着連絡、業務開始連絡は:{" "}
+                {element ? element.constactWorkEnd : "*"}
+              </Typography>
+              <Typography variant="body2" component="p">
+                スタッフ: {element ? element.staff : "*"}
               </Typography>
             </CardContent>
-            <CardActions>
-              <Button size="small">詳細</Button>
-            </CardActions>
           </Card>
           <br />
         </div>
       ))}
-    </div>
+    </>
   );
 }

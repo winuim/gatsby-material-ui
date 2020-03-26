@@ -33,6 +33,7 @@ export interface UserWorkingDaysProps {
 export interface WorkingDayProps {
   [index: string]: Array<{
     workSiteId: string;
+    prepareTime?: Date;
     departureTime?: Date;
     workStartTime?: Date;
     workEndTime?: Date;

@@ -74,6 +74,12 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="従業員一覧" />
     </ListItemLink>
+    <ListItemLink href="/admin#schedules">
+      <ListItemIcon>
+        <ScheduleIcon />
+      </ListItemIcon>
+      <ListItemText primary="従業員スケジュール" />
+    </ListItemLink>
     <ListItemLink href="/admin#worksites">
       <ListItemIcon>
         <ListIcon />
@@ -85,6 +91,12 @@ export const secondaryListItems = (
         <AddCircleIcon />
       </ListItemIcon>
       <ListItemText primary="現場登録" />
+    </ListItemLink>
+    <ListItemLink href="/admin#todo">
+      <ListItemIcon>
+        <TodayIcon />
+      </ListItemIcon>
+      <ListItemText primary="本日の現場" />
     </ListItemLink>
   </div>
 );

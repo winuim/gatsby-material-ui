@@ -57,6 +57,8 @@ export default function MyBacklog(props: Props) {
             <TableCell>業務予定時間</TableCell>
             <TableCell>集合場所</TableCell>
             <TableCell>集合時間</TableCell>
+            <TableCell>服装</TableCell>
+            <TableCell>持ち物</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -67,15 +69,12 @@ export default function MyBacklog(props: Props) {
               <TableCell>{row.workTime}</TableCell>
               <TableCell>{row.meetingPlace}</TableCell>
               <TableCell>{row.meetingHours}</TableCell>
+              <TableCell>{row.clothes}</TableCell>
+              <TableCell>{row.items}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          もっと見る
-        </Link>
-      </div>
     </React.Fragment>
   );
 }
