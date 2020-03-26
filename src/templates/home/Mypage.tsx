@@ -25,7 +25,7 @@ import Orders from "./Orders";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
@@ -178,10 +178,12 @@ export default function Mypage() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={8} lg={5}>
-              <MyCalendar
-                value={selected}
-                handleOnClickDay={handleOnClickDay}
-              />
+              <Paper className={classes.paper}>
+                <MyCalendar
+                  value={selected}
+                  handleOnClickDay={handleOnClickDay}
+                />
+              </Paper>
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={7}>

@@ -1,9 +1,6 @@
 import React from "react";
-import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import "../../styles/Calendar.css";
 import { format } from "date-fns";
 
 import Title from "./Title";
@@ -18,26 +15,12 @@ interface TileProps {
   view: ViewType;
 }
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-  fixedHeight: {
-    height: 450,
-  },
-}));
-
 interface Props {
   value: Date;
   handleOnClickDay: (value: Date) => void;
 }
 
 export default function MyCalendar(props: Props): JSX.Element {
-  const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const tileClassName = ({ date, view }: TileProps): string => {
     if (view != "month") {
       return "";
@@ -58,7 +41,7 @@ export default function MyCalendar(props: Props): JSX.Element {
       const workday = WorkingDays[day];
       return (
         <p>
-          {workday.map(v => {
+          {workday.map((v) => {
             const workSiteInfo = getWorkSiteInfo(v.workSiteId);
             if (workSiteInfo) {
               return workSiteInfo.workSiteName;
@@ -73,17 +56,15 @@ export default function MyCalendar(props: Props): JSX.Element {
 
   return (
     <React.Fragment>
-      <Paper className={fixedHeightPaper}>
-        <Title>カレンダー</Title>
-        <Calendar
-          locale="ja-JP"
-          calendarType="US"
-          onClickDay={props.handleOnClickDay}
-          value={props.value}
-          tileClassName={tileClassName}
-          tileContent={tileContent}
-        />
-      </Paper>
+      <Title>カレンダー</Title>
+      <Calendar
+        locale="ja-JP"
+        calendarType="US"
+        onClickDay={props.handleOnClickDay}
+        value={props.value}
+        tileClassName={tileClassName}
+        tileContent={tileContent}
+      />
     </React.Fragment>
   );
 }
