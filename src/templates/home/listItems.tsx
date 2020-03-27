@@ -26,23 +26,17 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="ホーム" />
     </ListItemLink>
-    <ListItemLink href="#schedule">
-      <ListItemIcon>
-        <ScheduleIcon />
-      </ListItemIcon>
-      <ListItemText primary="スケジュール登録" />
-    </ListItemLink>
-    <ListItemLink href="#backlog">
-      <ListItemIcon>
-        <WorkIcon />
-      </ListItemIcon>
-      <ListItemText primary="お仕事一覧" />
-    </ListItemLink>
     <ListItemLink href="#todo">
       <ListItemIcon>
         <TodayIcon />
       </ListItemIcon>
       <ListItemText primary="本日の現場" />
+    </ListItemLink>
+    <ListItemLink href="#schedule">
+      <ListItemIcon>
+        <ScheduleIcon />
+      </ListItemIcon>
+      <ListItemText primary="スケジュール登録" />
     </ListItemLink>
     <ListItemLink href="#profile">
       <ListItemIcon>

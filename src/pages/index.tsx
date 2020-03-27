@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import jaLocale from "date-fns/locale/ja";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  DatePicker,
+  TimePicker,
+  DateTimePicker,
+  MuiPickersUtilsProvider,
+} from "@material-ui/pickers";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 
 import ProTip from "../components/ProTip";
 import Layout from "../layout";
@@ -42,6 +51,14 @@ import FormControlLabelPosition from "../components/Checkbox/FormControlLabelPos
 import CustomizedCheckbox from "../components/Checkbox/CustomizedCheckbox";
 
 const Index: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const handleDateChange = (date: MaterialUiPickersDate) => {
+    console.log(date);
+    if (date) {
+      setSelectedDate(date);
+    }
+  };
+
   return (
     <Layout>
       <SEO title="index main" />
@@ -51,6 +68,13 @@ const Index: React.FC = () => {
         </Typography>
         <img src="https://source.unsplash.com/random/400x200" alt="" />
       </Grid>
+      <br />
+      <MuiPickersUtilsProvider utils={DateFnsUtils} locale={jaLocale}>
+        <DatePicker value={selectedDate} onChange={handleDateChange} />
+        <TimePicker value={selectedDate} onChange={handleDateChange} />
+        <DateTimePicker value={selectedDate} onChange={handleDateChange} />
+      </MuiPickersUtilsProvider>
+      <br />
       <SpacingGrid />
       <CenteredGrid />
       <FullWidthGrid />

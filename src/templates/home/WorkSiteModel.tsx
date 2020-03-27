@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-export interface WorkSiteExtendProps {
+interface WorkSiteExtendProps {
   workDate: string;
   meetingPlace?: string;
   meetingHours?: string;
@@ -15,26 +15,17 @@ export interface WorkSiteExtendProps {
   constactWorkEnd?: string;
   staff?: Array<string>;
 }
+type PartialWorkSiteExtendProps = Partial<WorkSiteExtendProps>;
 
-export interface WorkSiteProps {
+export interface WorkSiteProps extends PartialWorkSiteExtendProps {
   workSiteId: string;
   workSiteName: string;
   workSiteStartDateTime: Date;
   workSiteEndDateTime: Date;
-  meetingPlace?: string;
-  meetingHours?: string;
-  workStartTime?: string;
-  workEndTime?: string;
-  clothes?: string;
-  items?: string;
-  remarks?: string;
-  contactPrepare?: string;
-  contactDeparture?: string;
-  contactWorkStart?: string;
-  constactWorkEnd?: string;
-  staff?: Array<string>;
   extends: Array<WorkSiteExtendProps>;
 }
+
+type RequiredWorkSiteProps = Required<WorkSiteProps>;
 
 export function findWorkSite(
   workSiteId: string,
@@ -46,29 +37,22 @@ export function findWorkSite(
   return result;
 }
 
-export interface WorkSiteInfoProps {
-  workSiteId: string;
-  workSiteName: string;
-  workSiteDate: string;
-  workDate: string;
-  meetingPlace: string;
-  meetingHours: string;
-  workTime: string;
-  clothes: string;
-  items: string;
-  remarks: string;
-  contactPrepare: string;
-  contactDeparture: string;
-  contactWorkStart: string;
-  constactWorkEnd: string;
-  staff: string;
-}
+export type WorkSiteInfoProps = {
+  [P in keyof Omit<
+    RequiredWorkSiteProps,
+    | "workSiteStartDateTime"
+    | "workSiteEndDateTime"
+    | "extends"
+    | "workStartTime"
+    | "workEndTime"
+  >]: string;
+} & { workSiteDate: string; workTime: string };
 
 export const InitialWorkSiteInfo: WorkSiteInfoProps = {
   workSiteId: "W0000000000",
   workSiteName: "現場はありません",
   workSiteDate: "****-**-** 〜 ****-**-**",
-  workDate: "**-**",
+  workDate: "****-**-**",
   meetingPlace: "****",
   meetingHours: "**:**",
   workTime: "**:** 〜 **:**",

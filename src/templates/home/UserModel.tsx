@@ -22,23 +22,14 @@ export interface UserAvailableDayProps {
 }
 
 export interface UserWorkingDaysProps {
-  date: string;
   workSiteId: string;
-  departureTime?: Date;
-  workStartTime?: Date;
-  workEndTime?: Date;
+  date: string;
+  prepareTime?: string;
+  departureTime?: string;
+  arrivalTime?: string;
+  workStartTime?: string;
+  workEndTime?: string;
   breakTime?: string;
-}
-
-export interface WorkingDayProps {
-  [index: string]: Array<{
-    workSiteId: string;
-    prepareTime?: Date;
-    departureTime?: Date;
-    workStartTime?: Date;
-    workEndTime?: Date;
-    breakTime?: string;
-  }>;
 }
 
 export function filterWorking(
