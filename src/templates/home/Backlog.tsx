@@ -6,7 +6,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { isAfter, parse } from "date-fns";
+import { isAfter, parse, subDays } from "date-fns";
 
 import Title from "./Title";
 import { UserWorkingDaysProps } from "./UserModel";
@@ -37,7 +37,9 @@ export default function MyBacklog(props: Props) {
   const rows: Array<WorkSiteInfoProps> = [];
   const today = new Date();
   props.workingDayModels.forEach((value) => {
-    if (isAfter(parse(value.date, "yyyy-MM-dd", new Date()), today)) {
+    if (
+      isAfter(parse(value.date, "yyyy-MM-dd", new Date()), subDays(today, 1))
+    ) {
       const workSiteInfo = findWorkSite(value.workSiteId, props.workSiteModels);
       if (workSiteInfo) {
         const data = getWorkSiteInfo(value.date, workSiteInfo);

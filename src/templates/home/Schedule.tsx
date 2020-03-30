@@ -1,10 +1,32 @@
 import React, { useState } from "react";
-import { useTheme } from "@material-ui/core/styles";
-import ReactCalendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Calendar from "react-calendar";
+import "../../styles/Calendar.css";
 import { format, addDays, addMonths, endOfMonth } from "date-fns";
 
 import Title from "./Title";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      minWidth: 275,
+    },
+    title: {
+      fontSize: 14,
+    },
+    pos: {
+      marginBottom: 12,
+    },
+    paper: {
+      padding: theme.spacing(2),
+      display: "flex",
+      overflow: "auto",
+      flexDirection: "column",
+    },
+  })
+);
 
 type ViewType = "month" | "year" | "decade" | "century";
 
@@ -45,8 +67,8 @@ function getFormatDate(value: Date): string {
   //   ).slice(-2)}`;
 }
 
-export default function Calendar() {
-  const theme = useTheme();
+export default function MySchedule() {
+  const classes = useStyles();
   const [state, setState] = useState({
     value: new Date(),
   });
@@ -72,7 +94,7 @@ export default function Calendar() {
       const texts = workdays[day];
       return (
         <p>
-          {texts.map(v => {
+          {texts.map((v) => {
             return v.name;
           })}
         </p>
@@ -83,13 +105,13 @@ export default function Calendar() {
   const onChange = (value: Date | Date[], view: ViewType) => {
     console.log(`onChange ${value}`);
     const values: Date[] = Array.isArray(value) ? value : [value];
-    values.map(v => {
+    values.map((v) => {
       const day = getFormatDate(v);
       if (!workdays[day]) {
         workdays[day] = [];
       }
       if (
-        workdays[day].some(v => {
+        workdays[day].some((v) => {
           return v.name == "○";
         })
       ) {
@@ -106,17 +128,23 @@ export default function Calendar() {
 
   return (
     <React.Fragment>
-      <Title>Calendar</Title>
-      <ReactCalendar
-        locale="ja-JP"
-        calendarType="US"
-        onChange={onChange}
-        value={state.value}
-        tileClassName={tileClassName}
-        tileContent={tileContent}
-        minDate={addDays(new Date(), 1)}
-        maxDate={endOfMonth(addMonths(new Date(), 1))}
-      />
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <Title>スケジュール</Title>
+            <Calendar
+              locale="ja-JP"
+              calendarType="US"
+              onChange={onChange}
+              value={state.value}
+              tileClassName={tileClassName}
+              tileContent={tileContent}
+              minDate={addDays(new Date(), 1)}
+              maxDate={endOfMonth(addMonths(new Date(), 1))}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
     </React.Fragment>
   );
 }

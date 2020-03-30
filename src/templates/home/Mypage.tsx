@@ -9,6 +9,7 @@ import MyCalendar from "./Calendar";
 import MyTaskCard from "./TaskCard";
 import MyBacklog from "./Backlog";
 import MyTodo from "./Todo";
+import MySchedule from "./Schedule";
 
 import { MyWorkingDayModels } from "./UserModel";
 import { WorkSiteModels } from "./WorkSiteModel";
@@ -63,6 +64,7 @@ export default function Mypage() {
           workSiteModels={WorkSiteModels}
         />
       )}
+      {location.hash === "#schedule" && <MySchedule />}
     </Layout>
   );
 }
