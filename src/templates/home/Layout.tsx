@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import clsx from "clsx";
+import { useLocation } from "@reach/router";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
@@ -106,6 +107,7 @@ export const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Layout: React.FC = ({ children }) => {
+  const location = useLocation();
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [open, setOpen] = useState(true);
@@ -144,6 +146,9 @@ const Layout: React.FC = ({ children }) => {
             className={classes.title}
           >
             {location.hash === "" && "ダッシュボード"}
+            {location.hash === "#todo" && "本日の現場"}
+            {location.hash === "#schedule" && "スケジュール登録"}
+            {location.hash === "#profile" && "プロフィール"}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import { useLocation } from "@reach/router";
 
 import Layout, { useStyles } from "./Layout";
 import MyCalendar from "./Calendar";
@@ -13,6 +14,7 @@ import { MyWorkingDayModels } from "./UserModel";
 import { WorkSiteModels } from "./WorkSiteModel";
 
 export default function Mypage() {
+  const location = useLocation();
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [selected, setSelected] = useState(new Date());
