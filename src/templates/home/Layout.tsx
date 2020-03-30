@@ -106,34 +106,35 @@ export const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Layout: React.FC = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+  title: string;
+  open: boolean;
+  handleDrawerOpen: () => void;
+  handleDrawerClose: () => void;
+}
+
+export default function Layout(props: Props): JSX.Element {
   const location = useLocation();
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const [open, setOpen] = useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position="absolute"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
+        className={clsx(classes.appBar, props.open && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={props.handleDrawerOpen}
             className={clsx(
               classes.menuButton,
-              open && classes.menuButtonHidden
+              props.open && classes.menuButtonHidden
             )}
           >
             <MenuIcon />
@@ -145,10 +146,7 @@ const Layout: React.FC = ({ children }) => {
             noWrap
             className={classes.title}
           >
-            {location.hash === "" && "ダッシュボード"}
-            {location.hash === "#todo" && "本日の現場"}
-            {location.hash === "#schedule" && "スケジュール登録"}
-            {location.hash === "#profile" && "プロフィール"}
+            {props.title}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -160,12 +158,15 @@ const Layout: React.FC = ({ children }) => {
       <Drawer
         variant="permanent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: clsx(
+            classes.drawerPaper,
+            !props.open && classes.drawerPaperClose
+          ),
         }}
-        open={open}
+        open={props.open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={props.handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -177,7 +178,7 @@ const Layout: React.FC = ({ children }) => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          {children}
+          {props.children}
           <Box pt={4}>
             <Copyright />
           </Box>
@@ -185,6 +186,4 @@ const Layout: React.FC = ({ children }) => {
       </main>
     </div>
   );
-};
-
-export default Layout;
+}
