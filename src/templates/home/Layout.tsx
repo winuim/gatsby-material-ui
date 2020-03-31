@@ -106,35 +106,34 @@ export const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Props {
-  children: React.ReactNode;
-  title: string;
-  open: boolean;
-  handleDrawerOpen: () => void;
-  handleDrawerClose: () => void;
-}
-
-export default function Layout(props: Props): JSX.Element {
+const Layout: React.FC = ({ children }) => {
   const location = useLocation();
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const [open, setOpen] = useState(true);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position="absolute"
-        className={clsx(classes.appBar, props.open && classes.appBarShift)}
+        className={clsx(classes.appBar, open && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={props.handleDrawerOpen}
+            onClick={handleDrawerOpen}
             className={clsx(
               classes.menuButton,
-              props.open && classes.menuButtonHidden
+              open && classes.menuButtonHidden
             )}
           >
             <MenuIcon />
@@ -146,7 +145,10 @@ export default function Layout(props: Props): JSX.Element {
             noWrap
             className={classes.title}
           >
-            {props.title}
+            {location.hash === "" && "ダッシュボード"}
+            {location.hash === "#todo" && "本日の現場"}
+            {location.hash === "#schedule" && "スケジュール登録"}
+            {location.hash === "#profile" && "プロフィール"}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -158,15 +160,12 @@ export default function Layout(props: Props): JSX.Element {
       <Drawer
         variant="permanent"
         classes={{
-          paper: clsx(
-            classes.drawerPaper,
-            !props.open && classes.drawerPaperClose
-          ),
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
-        open={props.open}
+        open={open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={props.handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -178,7 +177,7 @@ export default function Layout(props: Props): JSX.Element {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          {props.children}
+          {children}
           <Box pt={4}>
             <Copyright />
           </Box>
@@ -186,4 +185,6 @@ export default function Layout(props: Props): JSX.Element {
       </main>
     </div>
   );
-}
+};
+
+export default Layout;
