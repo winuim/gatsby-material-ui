@@ -149,8 +149,8 @@ export const WorkSiteModels: Array<WorkSiteProps> = [
   {
     workSiteId: "W0000000001",
     workSiteName: "現場A",
-    workSiteStartDateTime: new Date("2020-03-20 00:00:00"),
-    workSiteEndDateTime: new Date("2020-03-20 23:59:59"),
+    workSiteStartDateTime: new Date("2020-03-20T00:00:00.000Z"),
+    workSiteEndDateTime: new Date("2020-03-20T23:59:59.000Z"),
     workStartTime: "10:00",
     workEndTime: "19:00",
     extends: [],
@@ -158,8 +158,8 @@ export const WorkSiteModels: Array<WorkSiteProps> = [
   {
     workSiteId: "W0000000002",
     workSiteName: "現場B",
-    workSiteStartDateTime: new Date("2020-03-30 00:00:00"),
-    workSiteEndDateTime: new Date("2020-03-31 23:59:59"),
+    workSiteStartDateTime: new Date("2020-03-30T00:00:00.000Z"),
+    workSiteEndDateTime: new Date("2020-03-31T23:59:59.000Z"),
     workStartTime: "10:00",
     workEndTime: "19:00",
     meetingPlace: "集合場所A",
@@ -176,8 +176,8 @@ export const WorkSiteModels: Array<WorkSiteProps> = [
   {
     workSiteId: "W0000000003",
     workSiteName: "現場C",
-    workSiteStartDateTime: new Date("2020-04-03 00:00:00"),
-    workSiteEndDateTime: new Date("2020-04-03 23:59:59"),
+    workSiteStartDateTime: new Date("2020-04-03T00:00:00.000Z"),
+    workSiteEndDateTime: new Date("2020-04-03T23:59:59.000Z"),
     workStartTime: "10:00",
     workEndTime: "19:00",
     extends: [],
