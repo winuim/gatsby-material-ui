@@ -26,10 +26,13 @@ export interface UserWorkingDaysProps {
   date: string;
   prepareTime?: string;
   departureTime?: string;
+  trainDepartureTime?: string;
   arrivalTime?: string;
   workStartTime?: string;
   workEndTime?: string;
-  breakTime?: string;
+  breakTime?: number;
+  transportationExpenses?: number;
+  report?: string;
 }
 
 export function filterWorking(

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
-import SaveIcon from "@material-ui/icons/Save";
-import EmailIcon from "@material-ui/icons/Email";
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { format, startOfDay } from "date-fns";
+import SaveIcon from "@material-ui/icons/Save";
+import SendIcon from "@material-ui/icons/Send";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import { format } from "date-fns";
 import jaLocale from "date-fns/locale/ja";
 import DateFnsUtils from "@date-io/date-fns";
 import { TimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -28,6 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       minWidth: 275,
+      "& .MuiTextField-root": {
+        margin: theme.spacing(1),
+        width: "25ch",
+      },
     },
     title: {
       fontSize: 14,
@@ -41,6 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: "auto",
       flexDirection: "column",
     },
+    button: {
+      margin: theme.spacing(1),
+    },
   })
 );
 
@@ -53,10 +61,10 @@ interface Props {
 interface DateProps {
   prepareTime: MaterialUiPickersDate;
   departureTime: MaterialUiPickersDate;
+  trainDepartureTime: MaterialUiPickersDate;
   arrivalTime: MaterialUiPickersDate;
   workStartTime: MaterialUiPickersDate;
   workEndTime: MaterialUiPickersDate;
-  breakTime: MaterialUiPickersDate;
 }
 
 export default function MyTodo(props: Props): JSX.Element {
@@ -76,36 +84,42 @@ export default function MyTodo(props: Props): JSX.Element {
     });
   }
   const today = new Date();
-  const initialDate: DateProps = {
-    prepareTime: today,
-    departureTime: today,
-    arrivalTime: today,
-    workStartTime: today,
-    workEndTime: today,
-    breakTime: startOfDay(today),
-  };
+  const initialDate: DateProps[] = workSiteInfo.map((v) => {
+    return {
+      prepareTime: today,
+      departureTime: today,
+      trainDepartureTime: today,
+      arrivalTime: today,
+      workStartTime: today,
+      workEndTime: today,
+    };
+  });
   const [selectedDate, setSelectedDate] = useState(initialDate);
-  const handleDateChange = (changeDate: Partial<DateProps>, index: number) => {
-    console.log(changeDate);
-    const updateDate: DateProps = {
+  const handleDateChange = (
+    changeDate: Partial<DateProps>,
+    index: number
+  ): void => {
+    console.log(JSON.stringify(changeDate) + ", " + index);
+    const updateDate = selectedDate.slice(0);
+    updateDate[index] = {
       prepareTime: changeDate.prepareTime
         ? changeDate.prepareTime
-        : selectedDate.prepareTime,
+        : selectedDate[index].prepareTime,
       departureTime: changeDate.departureTime
         ? changeDate.departureTime
-        : selectedDate.departureTime,
+        : selectedDate[index].departureTime,
+      trainDepartureTime: changeDate.trainDepartureTime
+        ? changeDate.trainDepartureTime
+        : selectedDate[index].trainDepartureTime,
       arrivalTime: changeDate.arrivalTime
         ? changeDate.arrivalTime
-        : selectedDate.arrivalTime,
+        : selectedDate[index].arrivalTime,
       workStartTime: changeDate.workStartTime
         ? changeDate.workStartTime
-        : selectedDate.workStartTime,
+        : selectedDate[index].workStartTime,
       workEndTime: changeDate.workEndTime
         ? changeDate.workEndTime
-        : selectedDate.workEndTime,
-      breakTime: changeDate.breakTime
-        ? changeDate.breakTime
-        : selectedDate.breakTime,
+        : selectedDate[index].workEndTime,
     };
     setSelectedDate(updateDate);
   };
@@ -157,65 +171,128 @@ export default function MyTodo(props: Props): JSX.Element {
                   <Typography variant="body2" component="p">
                     スタッフ: {element ? element.staff : "*"}
                   </Typography>
+                  <br />
                   <div>
                     <TimePicker
                       label="準備開始"
-                      value={selectedDate.prepareTime}
+                      value={selectedDate[index].prepareTime}
                       onChange={(date) =>
                         handleDateChange({ prepareTime: date }, index)
                       }
-                      minutesStep={5}
+                      showTodayButton={true}
+                      todayLabel="現在時刻"
                     />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      endIcon={<SendIcon />}
+                    >
+                      準備開始メール連絡
+                    </Button>
+                  </div>
+                  <div>
                     <TimePicker
                       label="出発"
-                      value={selectedDate.departureTime}
+                      value={selectedDate[index].departureTime}
                       onChange={(date) =>
                         handleDateChange({ departureTime: date }, index)
                       }
-                      minutesStep={5}
+                      showTodayButton={true}
+                      todayLabel="現在時刻"
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      endIcon={<SendIcon />}
+                    >
+                      出発メール連絡
+                    </Button>
+                  </div>
+                  <br />
+                  <div>
+                    <TimePicker
+                      label="公共交通機関利用開始時間"
+                      value={selectedDate[index].trainDepartureTime}
+                      onChange={(date) =>
+                        handleDateChange({ trainDepartureTime: date }, index)
+                      }
+                      showTodayButton={true}
+                      todayLabel="現在時刻"
                     />
                     <TimePicker
-                      label="到着"
-                      value={selectedDate.arrivalTime}
+                      label="集合時間"
+                      value={selectedDate[index].arrivalTime}
                       onChange={(date) =>
                         handleDateChange({ arrivalTime: date }, index)
                       }
-                      minutesStep={5}
+                      showTodayButton={true}
+                      todayLabel="現在時刻"
                     />
                     <TimePicker
-                      label="業務開始"
-                      value={selectedDate.workStartTime}
+                      label="開始時間"
+                      value={selectedDate[index].workStartTime}
                       onChange={(date) =>
                         handleDateChange({ workStartTime: date }, index)
                       }
-                      minutesStep={5}
+                      showTodayButton={true}
+                      todayLabel="現在時刻"
                     />
                     <TimePicker
-                      label="業務終了"
-                      value={selectedDate.workEndTime}
+                      label="終了時間"
+                      value={selectedDate[index].workEndTime}
                       onChange={(date) =>
                         handleDateChange({ workEndTime: date }, index)
                       }
-                      minutesStep={5}
+                      showTodayButton={true}
+                      todayLabel="現在時刻"
                     />
-                    <TimePicker
-                      label="休憩時間"
-                      ampm={false}
-                      value={selectedDate.breakTime}
-                      onChange={(date) =>
-                        handleDateChange({ breakTime: date }, index)
-                      }
-                      minutesStep={5}
+                    <TextField
+                      id="breakTime"
+                      label="休憩時間(分)"
+                      type="number"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      defaultValue="60"
+                    />
+                    <div>
+                      <TextField
+                        id="transportation-expenses"
+                        label="交通費往復"
+                        type="number"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                      <TextField id="section" label="区間(A〜B)" />
+                    </div>
+                    <TextField
+                      id="report"
+                      label="報告事項"
+                      multiline
+                      rows="4"
                     />
                   </div>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    endIcon={<SendIcon />}
+                  >
+                    就業報告メール送信
+                  </Button>
                 </CardContent>
                 <CardActions>
-                  <IconButton aria-label="save">
-                    <SaveIcon />
-                  </IconButton>
-                  <IconButton aria-label="send mail">
-                    <EmailIcon />
-                  </IconButton>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<SaveIcon />}
+                  >
+                    保存
+                  </Button>
                 </CardActions>
               </Card>
             </Paper>

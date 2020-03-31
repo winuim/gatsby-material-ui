@@ -109,8 +109,7 @@ export const useStyles = makeStyles((theme: Theme) =>
 const Layout: React.FC = ({ children }) => {
   const location = useLocation();
   const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
