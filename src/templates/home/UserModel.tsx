@@ -31,7 +31,8 @@ export interface UserWorkingDaysProps {
   workStartTime?: string;
   workEndTime?: string;
   breakTime?: number;
-  transportationExpenses?: number;
+  expenses?: number;
+  section?: string;
   report?: string;
 }
 

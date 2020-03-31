@@ -58,18 +58,23 @@ interface Props {
   workSiteModels: Array<WorkSiteProps>;
 }
 
-interface DateProps {
+interface SelectedProps {
   prepareTime: MaterialUiPickersDate;
   departureTime: MaterialUiPickersDate;
   trainDepartureTime: MaterialUiPickersDate;
   arrivalTime: MaterialUiPickersDate;
   workStartTime: MaterialUiPickersDate;
   workEndTime: MaterialUiPickersDate;
+  breakTime: number;
+  expenses: number;
+  section: string;
+  report: string;
 }
 
 export default function MyTodo(props: Props): JSX.Element {
   const classes = useStyles();
   let workSiteInfo: (WorkSiteInfoProps | undefined)[] = [InitialWorkSiteInfo];
+  let workSiteInfoDisabled = true;
   let selectedWorkSiteModels: (WorkSiteProps | undefined)[] = [];
   const day = format(props.value, "yyyy-MM-dd");
   const selectedWorkingDayModels = filterWorking(day, props.workingDayModels);
@@ -79,12 +84,13 @@ export default function MyTodo(props: Props): JSX.Element {
     });
     workSiteInfo = selectedWorkSiteModels.map((v) => {
       if (v) {
+        workSiteInfoDisabled = false;
         return getWorkSiteInfo(day, v);
       }
     });
   }
   const today = new Date();
-  const initialDate: DateProps[] = workSiteInfo.map((v) => {
+  const initialDate: SelectedProps[] = workSiteInfo.map((v) => {
     return {
       prepareTime: today,
       departureTime: today,
@@ -92,36 +98,91 @@ export default function MyTodo(props: Props): JSX.Element {
       arrivalTime: today,
       workStartTime: today,
       workEndTime: today,
+      breakTime: 60,
+      expenses: 0,
+      section: "",
+      report: "",
     };
   });
-  const [selectedDate, setSelectedDate] = useState(initialDate);
-  const handleDateChange = (
-    changeDate: Partial<DateProps>,
+  const [SelectedData, setSelectedData] = useState(initialDate);
+  const handleDataChange = (
+    changeData: Partial<SelectedProps>,
     index: number
   ): void => {
-    console.log(JSON.stringify(changeDate) + ", " + index);
-    const updateDate = selectedDate.slice(0);
+    console.log(JSON.stringify(changeData) + ", " + index);
+    const updateDate = SelectedData.slice(0);
     updateDate[index] = {
-      prepareTime: changeDate.prepareTime
-        ? changeDate.prepareTime
-        : selectedDate[index].prepareTime,
-      departureTime: changeDate.departureTime
-        ? changeDate.departureTime
-        : selectedDate[index].departureTime,
-      trainDepartureTime: changeDate.trainDepartureTime
-        ? changeDate.trainDepartureTime
-        : selectedDate[index].trainDepartureTime,
-      arrivalTime: changeDate.arrivalTime
-        ? changeDate.arrivalTime
-        : selectedDate[index].arrivalTime,
-      workStartTime: changeDate.workStartTime
-        ? changeDate.workStartTime
-        : selectedDate[index].workStartTime,
-      workEndTime: changeDate.workEndTime
-        ? changeDate.workEndTime
-        : selectedDate[index].workEndTime,
+      prepareTime: changeData.prepareTime
+        ? changeData.prepareTime
+        : SelectedData[index].prepareTime,
+      departureTime: changeData.departureTime
+        ? changeData.departureTime
+        : SelectedData[index].departureTime,
+      trainDepartureTime: changeData.trainDepartureTime
+        ? changeData.trainDepartureTime
+        : SelectedData[index].trainDepartureTime,
+      arrivalTime: changeData.arrivalTime
+        ? changeData.arrivalTime
+        : SelectedData[index].arrivalTime,
+      workStartTime: changeData.workStartTime
+        ? changeData.workStartTime
+        : SelectedData[index].workStartTime,
+      workEndTime: changeData.workEndTime
+        ? changeData.workEndTime
+        : SelectedData[index].workEndTime,
+      breakTime: changeData.breakTime
+        ? changeData.breakTime
+        : SelectedData[index].breakTime,
+      expenses: changeData.expenses
+        ? changeData.expenses
+        : SelectedData[index].expenses,
+      section: changeData.section
+        ? changeData.section
+        : SelectedData[index].section,
+      report: changeData.report
+        ? changeData.report
+        : SelectedData[index].report,
     };
-    setSelectedDate(updateDate);
+    setSelectedData(updateDate);
+  };
+  const handlePrepareMail = (index: number) => {
+    const nowTime = format(SelectedData[index].prepareTime as Date, "HH:mm");
+    const subject: string = encodeURIComponent("準備開始報告 ○○○○ " + nowTime);
+    const body: string = encodeURIComponent(
+      "おはようございます。\n今から準備開始します。\n"
+    );
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  };
+  const handleDepartureMail = (index: number) => {
+    const nowTime = format(SelectedData[index].departureTime as Date, "HH:mm");
+    const subject: string = encodeURIComponent("出発報告 ○○○○ " + nowTime);
+    const body: string = encodeURIComponent(
+      "お疲れ様です。\n今から出発します。\nよろしくお願いします。\n"
+    );
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  };
+  const handleReportMail = (index: number) => {
+    const subject: string = encodeURIComponent("就業報告 ○○○○ ");
+    const bodyMain = [
+      "お疲れさまです",
+      "本日の就業報告です。",
+      "",
+      "【氏名】○○　○○",
+      "【日付】" + workSiteInfo[index]?.workDate,
+      "【現場名】" + workSiteInfo[index]?.workSiteName,
+      "【勤務時間】" +
+        format(SelectedData[index].workStartTime as Date, "HH:mm") +
+        " 〜 " +
+        format(SelectedData[index].workEndTime as Date, "HH:mm"),
+      "【休憩時間】" + SelectedData[index].breakTime,
+      "【交通費・往復】" + SelectedData[index].expenses,
+      "【公共交通機関利用区間】" + SelectedData[index].section,
+      "【公共交通機関利用開始時間】" +
+        format(SelectedData[index].trainDepartureTime as Date, "HH:mm"),
+      "【報告事項】" + SelectedData[index].report,
+    ];
+    const body: string = encodeURIComponent(bodyMain.join("\n"));
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -175,18 +236,21 @@ export default function MyTodo(props: Props): JSX.Element {
                   <div>
                     <TimePicker
                       label="準備開始"
-                      value={selectedDate[index].prepareTime}
+                      value={SelectedData[index].prepareTime}
                       onChange={(date) =>
-                        handleDateChange({ prepareTime: date }, index)
+                        handleDataChange({ prepareTime: date }, index)
                       }
                       showTodayButton={true}
                       todayLabel="現在時刻"
+                      disabled={workSiteInfoDisabled}
                     />
                     <Button
                       variant="contained"
                       color="primary"
                       className={classes.button}
                       endIcon={<SendIcon />}
+                      onClick={() => handlePrepareMail(index)}
+                      disabled={workSiteInfoDisabled}
                     >
                       準備開始メール連絡
                     </Button>
@@ -194,18 +258,21 @@ export default function MyTodo(props: Props): JSX.Element {
                   <div>
                     <TimePicker
                       label="出発"
-                      value={selectedDate[index].departureTime}
+                      value={SelectedData[index].departureTime}
                       onChange={(date) =>
-                        handleDateChange({ departureTime: date }, index)
+                        handleDataChange({ departureTime: date }, index)
                       }
                       showTodayButton={true}
                       todayLabel="現在時刻"
+                      disabled={workSiteInfoDisabled}
                     />
                     <Button
                       variant="contained"
                       color="primary"
                       className={classes.button}
                       endIcon={<SendIcon />}
+                      onClick={() => handleDepartureMail(index)}
+                      disabled={workSiteInfoDisabled}
                     >
                       出発メール連絡
                     </Button>
@@ -214,65 +281,90 @@ export default function MyTodo(props: Props): JSX.Element {
                   <div>
                     <TimePicker
                       label="公共交通機関利用開始時間"
-                      value={selectedDate[index].trainDepartureTime}
+                      value={SelectedData[index].trainDepartureTime}
                       onChange={(date) =>
-                        handleDateChange({ trainDepartureTime: date }, index)
+                        handleDataChange({ trainDepartureTime: date }, index)
                       }
                       showTodayButton={true}
                       todayLabel="現在時刻"
+                      disabled={workSiteInfoDisabled}
                     />
                     <TimePicker
                       label="集合時間"
-                      value={selectedDate[index].arrivalTime}
+                      value={SelectedData[index].arrivalTime}
                       onChange={(date) =>
-                        handleDateChange({ arrivalTime: date }, index)
+                        handleDataChange({ arrivalTime: date }, index)
                       }
                       showTodayButton={true}
                       todayLabel="現在時刻"
+                      disabled={workSiteInfoDisabled}
                     />
                     <TimePicker
                       label="開始時間"
-                      value={selectedDate[index].workStartTime}
+                      value={SelectedData[index].workStartTime}
                       onChange={(date) =>
-                        handleDateChange({ workStartTime: date }, index)
+                        handleDataChange({ workStartTime: date }, index)
                       }
                       showTodayButton={true}
                       todayLabel="現在時刻"
+                      disabled={workSiteInfoDisabled}
                     />
                     <TimePicker
                       label="終了時間"
-                      value={selectedDate[index].workEndTime}
+                      value={SelectedData[index].workEndTime}
                       onChange={(date) =>
-                        handleDateChange({ workEndTime: date }, index)
+                        handleDataChange({ workEndTime: date }, index)
                       }
                       showTodayButton={true}
                       todayLabel="現在時刻"
+                      disabled={workSiteInfoDisabled}
                     />
                     <TextField
-                      id="breakTime"
                       label="休憩時間(分)"
                       type="number"
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      defaultValue="60"
+                      defaultValue={SelectedData[index].breakTime}
+                      onChange={(e) =>
+                        handleDataChange(
+                          { breakTime: parseInt(e.target.value) },
+                          index
+                        )
+                      }
+                      disabled={workSiteInfoDisabled}
                     />
                     <div>
                       <TextField
-                        id="transportation-expenses"
                         label="交通費往復"
                         type="number"
                         InputLabelProps={{
                           shrink: true,
                         }}
+                        onChange={(e) =>
+                          handleDataChange(
+                            { expenses: parseInt(e.target.value) },
+                            index
+                          )
+                        }
+                        disabled={workSiteInfoDisabled}
                       />
-                      <TextField id="section" label="区間(A〜B)" />
+                      <TextField
+                        label="区間"
+                        onChange={(e) =>
+                          handleDataChange({ section: e.target.value }, index)
+                        }
+                        disabled={workSiteInfoDisabled}
+                      />
                     </div>
                     <TextField
-                      id="report"
                       label="報告事項"
                       multiline
                       rows="4"
+                      onChange={(e) =>
+                        handleDataChange({ report: e.target.value }, index)
+                      }
+                      disabled={workSiteInfoDisabled}
                     />
                   </div>
                   <Button
@@ -280,6 +372,8 @@ export default function MyTodo(props: Props): JSX.Element {
                     color="primary"
                     className={classes.button}
                     endIcon={<SendIcon />}
+                    onClick={() => handleReportMail(index)}
+                    disabled={workSiteInfoDisabled}
                   >
                     就業報告メール送信
                   </Button>
@@ -290,6 +384,7 @@ export default function MyTodo(props: Props): JSX.Element {
                     color="primary"
                     className={classes.button}
                     startIcon={<SaveIcon />}
+                    disabled={workSiteInfoDisabled}
                   >
                     保存
                   </Button>
