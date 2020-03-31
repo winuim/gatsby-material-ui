@@ -18,6 +18,13 @@ export default function Mypage() {
   const location = useLocation();
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const [open, setOpen] = useState(true);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
   const [selected, setSelected] = useState(new Date());
   const handleOnClickDay = (value: Date): void => {
     setSelected(value);
@@ -25,7 +32,12 @@ export default function Mypage() {
   };
 
   return (
-    <Layout>
+    <Layout
+      title="ダッシュボード"
+      open={open}
+      handleDrawerOpen={handleDrawerOpen}
+      handleDrawerClose={handleDrawerClose}
+    >
       {location.hash === "" && (
         <Grid container spacing={3}>
           <Grid item xs={12} sm={8} lg={5}>
