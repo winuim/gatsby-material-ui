@@ -1,27 +1,48 @@
 import React, { useState } from "react";
-import clsx from "clsx";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { useLocation } from "@reach/router";
+import { format } from "date-fns";
 
 import Layout, { useStyles } from "./Layout";
-import MyCalendar from "./Calendar";
+import MyCalendar, { CalendarTileProps } from "./Calendar";
 import MyTaskCard from "./TaskCard";
 import MyBacklog from "./Backlog";
 import MyTodo from "./Todo";
 import MySchedule from "./Schedule";
 
-import { MyWorkingDayModels } from "./UserModel";
-import { WorkSiteModels } from "./WorkSiteModel";
+import { MyWorkingDayModels, filterWorking } from "./UserModel";
+import { WorkSiteModels, findWorkSite, getWorkSiteInfo } from "./WorkSiteModel";
 
-export default function Mypage() {
+export default function Mypage(): JSX.Element {
   const location = useLocation();
   const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [selected, setSelected] = useState(new Date());
   const handleOnClickDay = (value: Date): void => {
+    console.debug(`handleOnClick(${value})`);
     setSelected(value);
-    // console.log(`handleOnClick ${value}`);
+  };
+  const tileContent = ({ date, view }: CalendarTileProps): JSX.Element => {
+    if (view != "month") {
+      return <p>{"  "}</p>;
+    }
+    const day = format(date, "yyyy-MM-dd");
+    const workingDayModels = filterWorking(day, MyWorkingDayModels);
+    if (workingDayModels.length > 0) {
+      return (
+        <p>
+          {workingDayModels.map((v) => {
+            const workSiteModel = findWorkSite(v.workSiteId, WorkSiteModels);
+            if (workSiteModel) {
+              const workSiteInfo = getWorkSiteInfo(day, workSiteModel);
+              return workSiteInfo.workSiteName;
+            }
+            return "error";
+          })}
+        </p>
+      );
+    }
+    return <p>{"  "}</p>;
   };
 
   return (
@@ -32,9 +53,9 @@ export default function Mypage() {
             <Paper className={classes.paper}>
               <MyCalendar
                 value={selected}
+                title="カレンダー"
+                tileContent={tileContent}
                 handleOnClickDay={handleOnClickDay}
-                workingDayModels={MyWorkingDayModels}
-                workSiteModels={WorkSiteModels}
               />
             </Paper>
           </Grid>
@@ -42,7 +63,7 @@ export default function Mypage() {
             <Paper className={classes.paper}>
               <MyTaskCard
                 value={selected}
-                workingDayModels={MyWorkingDayModels}
+                workReportModels={MyWorkingDayModels}
                 workSiteModels={WorkSiteModels}
               />
             </Paper>
@@ -50,7 +71,7 @@ export default function Mypage() {
           <Grid item xs={12}>
             <Paper className={classes.paper}>
               <MyBacklog
-                workingDayModels={MyWorkingDayModels}
+                workReportModels={MyWorkingDayModels}
                 workSiteModels={WorkSiteModels}
               />
             </Paper>
@@ -60,7 +81,7 @@ export default function Mypage() {
       {location.hash === "#todo" && (
         <MyTodo
           value={new Date()}
-          workingDayModels={MyWorkingDayModels}
+          workReportModels={MyWorkingDayModels}
           workSiteModels={WorkSiteModels}
         />
       )}

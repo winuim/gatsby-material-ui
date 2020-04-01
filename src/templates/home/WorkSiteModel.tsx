@@ -15,9 +15,8 @@ interface WorkSiteExtendProps {
   constactWorkEnd?: string;
   staff?: Array<string>;
 }
-type PartialWorkSiteExtendProps = Partial<WorkSiteExtendProps>;
 
-export interface WorkSiteProps extends PartialWorkSiteExtendProps {
+export interface WorkSiteProps extends Partial<WorkSiteExtendProps> {
   workSiteId: string;
   workSiteName: string;
   workSiteStartDateTime: Date;
@@ -27,14 +26,23 @@ export interface WorkSiteProps extends PartialWorkSiteExtendProps {
 
 type RequiredWorkSiteProps = Required<WorkSiteProps>;
 
+const defaultWorkSiteModel: WorkSiteProps = {
+  workDate: "2020-01-01",
+  workSiteId: "エラー",
+  workSiteName: "エラー",
+  workSiteStartDateTime: new Date("2020-01-01T00:00:00.000Z"),
+  workSiteEndDateTime: new Date("2020-01-01T00:00:00.000Z"),
+  extends: [],
+};
+
 export function findWorkSite(
   workSiteId: string,
   models: Array<WorkSiteProps>
-): WorkSiteProps | undefined {
+): WorkSiteProps {
   const result = models.find((value) => {
     return value.workSiteId == workSiteId;
   });
-  return result;
+  return result ? result : defaultWorkSiteModel;
 }
 
 export type WorkSiteInfoProps = {

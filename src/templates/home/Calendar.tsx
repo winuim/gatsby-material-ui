@@ -1,29 +1,28 @@
 import React from "react";
 import Calendar from "react-calendar";
 import "../../styles/Calendar.css";
-import { format } from "date-fns";
 
 import Title from "./Title";
 import { isHoliday } from "./HolidayModel";
-import { UserWorkingDaysProps, filterWorking } from "./UserModel";
-import { WorkSiteProps, findWorkSite, getWorkSiteInfo } from "./WorkSiteModel";
 
-type ViewType = "month" | "year" | "decade" | "century";
+export type CalendarViewType = "month" | "year" | "decade" | "century";
 
-interface TileProps {
+export interface CalendarTileProps {
   date: Date;
-  view: ViewType;
+  view: CalendarViewType;
 }
 
-interface Props {
+export interface CalendarProps {
   value: Date;
+  title: string;
+  tileContent: ({ date, view }: CalendarTileProps) => JSX.Element;
   handleOnClickDay: (value: Date) => void;
-  workingDayModels: Array<UserWorkingDaysProps>;
-  workSiteModels: Array<WorkSiteProps>;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
-export default function MyCalendar(props: Props): JSX.Element {
-  const tileClassName = ({ date, view }: TileProps): string => {
+export default function MyCalendar(props: CalendarProps): JSX.Element {
+  const tileClassName = ({ date, view }: CalendarTileProps): string => {
     if (view != "month") {
       return "";
     }
@@ -34,42 +33,19 @@ export default function MyCalendar(props: Props): JSX.Element {
     }
     return isHoliday(date) ? "holiday" : "";
   };
-  const tileContent = ({ date, view }: TileProps): JSX.Element => {
-    if (view != "month") {
-      return <p>{"  "}</p>;
-    }
-    const day = format(date, "yyyy-MM-dd");
-    const workingDayModels = filterWorking(day, props.workingDayModels);
-    if (workingDayModels.length > 0) {
-      return (
-        <p>
-          {workingDayModels.map((v) => {
-            const workSiteModel = findWorkSite(
-              v.workSiteId,
-              props.workSiteModels
-            );
-            if (workSiteModel) {
-              const workSiteInfo = getWorkSiteInfo(day, workSiteModel);
-              return workSiteInfo.workSiteName;
-            }
-            return "error";
-          })}
-        </p>
-      );
-    }
-    return <p>{"  "}</p>;
-  };
 
   return (
     <React.Fragment>
-      <Title>カレンダー</Title>
+      <Title>{props.title}</Title>
       <Calendar
         locale="ja-JP"
         calendarType="US"
         onClickDay={props.handleOnClickDay}
         value={props.value}
         tileClassName={tileClassName}
-        tileContent={tileContent}
+        tileContent={props.tileContent}
+        minDate={props.minDate}
+        maxDate={props.maxDate}
       />
     </React.Fragment>
   );

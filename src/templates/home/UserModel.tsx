@@ -18,30 +18,36 @@ export interface UserProfileModel {
 }
 
 export interface UserAvailableDayProps {
-  [index: string]: boolean;
+  [month: string]: {
+    [day: string]: {
+      available: number;
+    };
+  };
 }
 
-export interface UserWorkingDaysProps {
+export interface UserWorkReportProps {
+  workDate: string;
   workSiteId: string;
-  date: string;
-  prepareTime?: string;
-  departureTime?: string;
-  trainDepartureTime?: string;
-  arrivalTime?: string;
-  workStartTime?: string;
-  workEndTime?: string;
+  prepareTime?: Date;
+  departureTime?: Date;
+  trainDepartureTime?: Date;
+  arrivalTime?: Date;
+  workStartTime?: Date;
+  workEndTime?: Date;
   breakTime?: number;
   expenses?: number;
   section?: string;
   report?: string;
 }
 
+export type RequiredUserWorkReportProps = Required<UserWorkReportProps>;
+
 export function filterWorking(
   date: string,
-  models: UserWorkingDaysProps[]
-): UserWorkingDaysProps[] {
+  models: UserWorkReportProps[]
+): UserWorkReportProps[] {
   const result = models.filter((value) => {
-    return value.date === date;
+    return value.workDate === date;
   });
   return result;
 }
@@ -53,26 +59,29 @@ export const MyProfileModel: UserProfileModel = {
 };
 
 export const MyAvailableDaysModel: UserAvailableDayProps = {
-  "2020-03-30": true,
-  "2020-03-31": true,
-  "2020-04-01": true,
-  "2020-04-02": true,
-  "2020-04-03": true,
+  "2020-03": {
+    "2020-03-30": {
+      available: 1,
+    },
+    "2020-03-31": {
+      available: 1,
+    },
+  },
 };
 
-export const MyWorkingDayModels: Array<UserWorkingDaysProps> = [
-  { date: "2020-03-20", workSiteId: "W0000000001" },
-  { date: "2020-03-30", workSiteId: "W0000000002" },
-  { date: "2020-03-31", workSiteId: "W0000000002" },
-  { date: "2020-04-01", workSiteId: "W0000000003" },
-  { date: "2020-04-01", workSiteId: "W0000000006" },
-  { date: "2020-04-02", workSiteId: "W0000000003" },
-  { date: "2020-04-03", workSiteId: "W0000000003" },
-  { date: "2020-04-04", workSiteId: "W0000000003" },
-  { date: "2020-04-05", workSiteId: "W0000000003" },
-  { date: "2020-04-06", workSiteId: "W0000000003" },
-  { date: "2020-04-07", workSiteId: "W0000000003" },
-  { date: "2020-04-08", workSiteId: "W0000000004" },
-  { date: "2020-04-09", workSiteId: "W0000000004" },
-  { date: "2020-04-10", workSiteId: "W0000000004" },
+export const MyWorkingDayModels: Array<UserWorkReportProps> = [
+  { workDate: "2020-03-20", workSiteId: "W0000000001" },
+  { workDate: "2020-03-30", workSiteId: "W0000000002" },
+  { workDate: "2020-03-31", workSiteId: "W0000000002" },
+  { workDate: "2020-04-01", workSiteId: "W0000000003" },
+  { workDate: "2020-04-01", workSiteId: "W0000000006" },
+  { workDate: "2020-04-02", workSiteId: "W0000000003" },
+  { workDate: "2020-04-03", workSiteId: "W0000000003" },
+  { workDate: "2020-04-04", workSiteId: "W0000000003" },
+  { workDate: "2020-04-05", workSiteId: "W0000000003" },
+  { workDate: "2020-04-06", workSiteId: "W0000000003" },
+  { workDate: "2020-04-07", workSiteId: "W0000000003" },
+  { workDate: "2020-04-08", workSiteId: "W0000000004" },
+  { workDate: "2020-04-09", workSiteId: "W0000000004" },
+  { workDate: "2020-04-10", workSiteId: "W0000000004" },
 ];

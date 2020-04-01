@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Calendar from "react-calendar";
-import "../../styles/Calendar.css";
+import SaveIcon from "@material-ui/icons/Save";
+import SendIcon from "@material-ui/icons/Send";
+import Typography from "@material-ui/core/Typography";
 import { format, addDays, addMonths, endOfMonth } from "date-fns";
 
-import Title from "./Title";
+import MyCalendar, { CalendarTileProps } from "./Calendar";
+import { UserAvailableDayProps } from "./UserModel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,123 +31,213 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: "auto",
       flexDirection: "column",
     },
+    button: {
+      margin: theme.spacing(1),
+    },
   })
 );
 
-type ViewType = "month" | "year" | "decade" | "century";
-
-interface TileProps {
-  date: Date;
-  view: ViewType;
+function getFormatMonth(value: Date): string {
+  return format(value, "yyyy-MM");
 }
-
-interface HolidaysProps {
-  [index: string]: {
-    isHoliday: boolean;
-  };
-}
-
-interface UserProps {
-  [index: string]: boolean;
-}
-
-interface WorkdaysProps {
-  [index: string]: Array<{
-    name: string;
-  }>;
-}
-
-const holidays: HolidaysProps = {
-  "2020-03-20": { isHoliday: true },
-};
-
-const workdays: WorkdaysProps = {
-  "2020-03-03": [{ name: "ひな祭り" }],
-  "2020-03-25": [{ name: "終業式" }],
-};
 
 function getFormatDate(value: Date): string {
   return format(value, "yyyy-MM-dd");
-  //   return `${value.getFullYear()}-${("0" + (value.getMonth() + 1)).slice(-2)}-${(
-  //     "0" + value.getDate()
-  //   ).slice(-2)}`;
+}
+
+function initUserAvailableDays(
+  minDate: Date,
+  maxDate: Date
+): UserAvailableDayProps {
+  const userAvailableDays: UserAvailableDayProps = {};
+  const minDateMonth = getFormatMonth(minDate);
+  const maxDateMonth = getFormatMonth(maxDate);
+  userAvailableDays[minDateMonth] = {};
+  userAvailableDays[maxDateMonth] = {};
+  return userAvailableDays;
+}
+
+function getUserAvailableDaysChar(
+  userAvailableDays: UserAvailableDayProps,
+  date: Date
+): string {
+  const month = getFormatMonth(date);
+  const day = getFormatDate(date);
+  if (userAvailableDays[month]) {
+    if (userAvailableDays[month][day]) {
+      switch (userAvailableDays[month][day].available) {
+        case 1: {
+          return "○";
+        }
+        case 2: {
+          return "△";
+        }
+        case 3: {
+          return "X";
+        }
+        default: {
+          return "  ";
+        }
+      }
+    }
+  }
+  return "  ";
+}
+
+function incrUserAvailableDaysChar(
+  userAvailableDays: UserAvailableDayProps,
+  date: Date
+): UserAvailableDayProps {
+  const month = getFormatMonth(date);
+  const day = getFormatDate(date);
+  if (!userAvailableDays[month]) {
+    userAvailableDays[month] = {};
+  }
+  if (!userAvailableDays[month][day]) {
+    userAvailableDays[month][day] = {
+      available: 0,
+    };
+  }
+  if (userAvailableDays[month][day]) {
+    let available = userAvailableDays[month][day].available + 1;
+    if (available > 3) {
+      available = 1;
+    }
+    userAvailableDays[month][day].available = available;
+  }
+  console.log(
+    `incrUserAvailableDaysChar ${day}:${JSON.stringify(
+      userAvailableDays[month][day]
+    )}`
+  );
+  return userAvailableDays;
+}
+
+function getUserAvailableDaysStr(
+  userAvailableDays: UserAvailableDayProps,
+  available: number
+): string[] {
+  const result: string[] = [];
+  for (const month in userAvailableDays) {
+    for (const day in userAvailableDays[month]) {
+      const dayData = userAvailableDays[month][day];
+      if (dayData.available === available) {
+        result.push(day.substr(5, 5));
+      }
+    }
+  }
+  return result;
 }
 
 export default function MySchedule() {
   const classes = useStyles();
-  const [state, setState] = useState({
-    value: new Date(),
+  const minDate = addDays(new Date(), 7);
+  const maxDate = endOfMonth(addMonths(new Date(), 1));
+  const [selected, setSelected] = useState({
+    date: new Date(),
+    userAvailableDays: initUserAvailableDays(minDate, maxDate),
   });
 
-  const tileClassName = ({ date, view }: TileProps) => {
+  const tileContent = ({ date, view }: CalendarTileProps): JSX.Element => {
     if (view != "month") {
-      return "";
+      return <p>{"  "}</p>;
     }
-    if (date.getDay() === 0) {
-      return "sunday";
-    } else if (date.getDay() === 6) {
-      return "saturday";
-    }
-    const day = getFormatDate(date);
-    return holidays[day] && holidays[day].isHoliday ? "holiday" : "";
+    const userAvailableDays = selected.userAvailableDays;
+    return <p>{getUserAvailableDaysChar(userAvailableDays, date)}</p>;
   };
-  const tileContent = ({ date, view }: TileProps) => {
-    if (view != "month") {
-      return "";
-    }
-    const day = getFormatDate(date);
-    if (workdays[day]) {
-      const texts = workdays[day];
-      return (
-        <p>
-          {texts.map((v) => {
-            return v.name;
-          })}
-        </p>
-      );
-    }
-    return <p>{"  "}</p>;
-  };
-  const onChange = (value: Date | Date[], view: ViewType) => {
-    console.log(`onChange ${value}`);
-    const values: Date[] = Array.isArray(value) ? value : [value];
-    values.map((v) => {
-      const day = getFormatDate(v);
-      if (!workdays[day]) {
-        workdays[day] = [];
-      }
-      if (
-        workdays[day].some((v) => {
-          return v.name == "○";
-        })
-      ) {
-        workdays[day].pop();
-      } else {
-        workdays[day].push({
-          name: "○",
-        });
-      }
-      console.log(`onChange ${JSON.stringify(workdays[day])}`);
-      setState({ value: v });
+  const handleOnClickDay = (value: Date): void => {
+    console.debug(`handleOnClick(${value})`);
+    const userAvailableDays = incrUserAvailableDaysChar(
+      selected.userAvailableDays,
+      value
+    );
+    setSelected({
+      date: value,
+      userAvailableDays: userAvailableDays,
     });
+  };
+  const handleScheduleMail = (): void => {
+    const subject: string = encodeURIComponent("スケジュール提出 ○○○○");
+    const bodyMain = [
+      "お疲れ様です。",
+      "○ (空いてます): " +
+        getUserAvailableDaysStr(selected.userAvailableDays, 1).join(", "),
+      "X (空いてません): " +
+        getUserAvailableDaysStr(selected.userAvailableDays, 3).join(", "),
+      "△ (未定): " +
+        getUserAvailableDaysStr(selected.userAvailableDays, 2).join(", "),
+      "よろしくお願いします。",
+    ];
+    const body: string = encodeURIComponent(bodyMain.join("\n"));
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
 
   return (
     <React.Fragment>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={8} lg={5}>
           <Paper className={classes.paper}>
-            <Title>スケジュール</Title>
-            <Calendar
-              locale="ja-JP"
-              calendarType="US"
-              onChange={onChange}
-              value={state.value}
-              tileClassName={tileClassName}
+            <MyCalendar
+              value={selected.date}
+              title="スケジュール登録"
               tileContent={tileContent}
-              minDate={addDays(new Date(), 1)}
-              maxDate={endOfMonth(addMonths(new Date(), 1))}
+              handleOnClickDay={handleOnClickDay}
+              minDate={minDate}
+              maxDate={maxDate}
             />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={4} lg={7}>
+          <Paper className={classes.paper}>
+            <Card className={classes.root}>
+              <CardContent>
+                <Typography
+                  className={classes.title}
+                  color="textSecondary"
+                  gutterBottom
+                >
+                  {getFormatDate(minDate)}〜{getFormatDate(maxDate)}
+                  のスケジュール
+                </Typography>
+                <Typography variant="body2" component="p">
+                  ○ (空いてます):{" "}
+                  {getUserAvailableDaysStr(selected.userAvailableDays, 1).join(
+                    ", "
+                  )}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  X (空いてません):{" "}
+                  {getUserAvailableDaysStr(selected.userAvailableDays, 3).join(
+                    ", "
+                  )}
+                </Typography>
+                <Typography variant="body2" component="p">
+                  △ (未定):{" "}
+                  {getUserAvailableDaysStr(selected.userAvailableDays, 2).join(
+                    ", "
+                  )}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  startIcon={<SaveIcon />}
+                >
+                  保存
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  endIcon={<SendIcon />}
+                  onClick={handleScheduleMail}
+                >
+                  スケジュール提出メール送信
+                </Button>
+              </CardActions>
+            </Card>
           </Paper>
         </Grid>
       </Grid>

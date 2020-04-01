@@ -5,7 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { format } from "date-fns";
 
-import { UserWorkingDaysProps, filterWorking } from "./UserModel";
+import { UserWorkReportProps, filterWorking } from "./UserModel";
 import {
   WorkSiteProps,
   WorkSiteInfoProps,
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   value: Date;
-  workingDayModels: Array<UserWorkingDaysProps>;
+  workReportModels: Array<UserWorkReportProps>;
   workSiteModels: Array<WorkSiteProps>;
 }
 
@@ -39,9 +39,9 @@ export default function MyTaskCard(props: Props): JSX.Element {
   let workSiteInfo: (WorkSiteInfoProps | undefined)[] = [InitialWorkSiteInfo];
   let selectedWorkSiteModels: (WorkSiteProps | undefined)[] = [];
   const day = format(props.value, "yyyy-MM-dd");
-  const selectedWorkingDayModels = filterWorking(day, props.workingDayModels);
-  if (selectedWorkingDayModels.length > 0) {
-    selectedWorkSiteModels = selectedWorkingDayModels.map((v) => {
+  const selectedworkReportModels = filterWorking(day, props.workReportModels);
+  if (selectedworkReportModels.length > 0) {
+    selectedWorkSiteModels = selectedworkReportModels.map((v) => {
       return findWorkSite(v.workSiteId, props.workSiteModels);
     });
     workSiteInfo = selectedWorkSiteModels.map((v) => {

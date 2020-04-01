@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,7 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { isAfter, parse, subDays } from "date-fns";
 
 import Title from "./Title";
-import { UserWorkingDaysProps } from "./UserModel";
+import { UserWorkReportProps } from "./UserModel";
 import {
   WorkSiteProps,
   WorkSiteInfoProps,
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  workingDayModels: Array<UserWorkingDaysProps>;
+  workReportModels: Array<UserWorkReportProps>;
   workSiteModels: Array<WorkSiteProps>;
 }
 
@@ -36,13 +35,16 @@ export default function MyBacklog(props: Props) {
   const classes = useStyles();
   const rows: Array<WorkSiteInfoProps> = [];
   const today = new Date();
-  props.workingDayModels.forEach((value) => {
+  props.workReportModels.forEach((value) => {
     if (
-      isAfter(parse(value.date, "yyyy-MM-dd", new Date()), subDays(today, 1))
+      isAfter(
+        parse(value.workDate, "yyyy-MM-dd", new Date()),
+        subDays(today, 1)
+      )
     ) {
       const workSiteInfo = findWorkSite(value.workSiteId, props.workSiteModels);
       if (workSiteInfo) {
-        const data = getWorkSiteInfo(value.date, workSiteInfo);
+        const data = getWorkSiteInfo(value.workDate, workSiteInfo);
         rows.push(data);
       }
     }
@@ -64,7 +66,7 @@ export default function MyBacklog(props: Props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.slice(0, 10).map((row) => (
             <TableRow key={row.workSiteId + "-" + row.workDate}>
               <TableCell>{row.workDate}</TableCell>
               <TableCell>{row.workSiteName}</TableCell>
