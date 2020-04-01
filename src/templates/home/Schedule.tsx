@@ -175,7 +175,7 @@ export default function MySchedule() {
   return (
     <React.Fragment>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={8} lg={5}>
+        <Grid item xs={12} sm={6} lg={6}>
           <Paper className={classes.paper}>
             <MyCalendar
               value={selected.date}
@@ -187,7 +187,7 @@ export default function MySchedule() {
             />
           </Paper>
         </Grid>
-        <Grid item xs={12} md={4} lg={7}>
+        <Grid item xs={12} md={6} lg={6}>
           <Paper className={classes.paper}>
             <Card className={classes.root}>
               <CardContent>
