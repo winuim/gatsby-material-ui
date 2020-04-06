@@ -73,7 +73,7 @@
   "scripts": {
     "clean": "gatsby clean",
     "develop": "gatsby develop",
-    "build": "gatsby build",
+    "build": "gatsby clean && gatsby build",
     "serve": "gatsby serve",
     "start": "npm run develop",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",

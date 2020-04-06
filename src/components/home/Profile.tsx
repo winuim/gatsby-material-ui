@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 
-import { UserProfileModel } from "../../model/UserModel";
+import { ProfileModel } from "../../model/EmployeeModel";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  user: UserProfileModel;
+  user: ProfileModel;
 }
 
 export default function MyProfile(props: Props): JSX.Element {
@@ -42,7 +42,7 @@ export default function MyProfile(props: Props): JSX.Element {
               label="First name"
               fullWidth
               autoComplete="fname"
-              value={props.user.firstName ? props.user.firstName : "FirstName"}
+              value={props.user ? props.user.firstName : "FirstName"}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -53,7 +53,7 @@ export default function MyProfile(props: Props): JSX.Element {
               label="Last name"
               fullWidth
               autoComplete="lname"
-              value={props.user.lastName ? props.user.lastName : "LastName"}
+              value={props.user ? props.user.lastName : "LastName"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -63,7 +63,7 @@ export default function MyProfile(props: Props): JSX.Element {
               name="email"
               label="E-mail"
               fullWidth
-              value={props.user.email ? props.user.email : "email address"}
+              value={props.user ? props.user.email : "email address"}
             />
           </Grid>
         </Grid>

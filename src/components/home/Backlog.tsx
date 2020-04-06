@@ -7,14 +7,14 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { isAfter, parse, subDays } from "date-fns";
 
-import Title from "../../components/Title";
-import { UserWorkReportProps } from "../../model/UserModel";
+import Title from "../Title";
+import { WorkReportProps } from "../../model/EmployeeModel";
 import {
   WorkSiteProps,
   WorkSiteInfoProps,
-  findWorkSite,
+  findWorkSites,
   getWorkSiteInfo,
-} from "../../model/WorkSiteModel";
+} from "../../model/WorkSitesModel";
 
 function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
@@ -27,28 +27,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  workReportModels: Array<UserWorkReportProps>;
+  workReportModels: Array<WorkReportProps>;
   workSiteModels: Array<WorkSiteProps>;
 }
 
-export default function MyBacklog(props: Props) {
+export default function MyBacklog(props: Props): JSX.Element {
   const classes = useStyles();
   const rows: Array<WorkSiteInfoProps> = [];
   const today = new Date();
-  props.workReportModels.forEach((value) => {
-    if (
-      isAfter(
-        parse(value.workDate, "yyyy-MM-dd", new Date()),
-        subDays(today, 1)
-      )
-    ) {
-      const workSiteInfo = findWorkSite(value.workSiteId, props.workSiteModels);
-      if (workSiteInfo) {
-        const data = getWorkSiteInfo(value.workDate, workSiteInfo);
-        rows.push(data);
+  if (props.workReportModels) {
+    props.workReportModels.forEach((value) => {
+      if (
+        isAfter(
+          parse(value.workDate, "yyyy-MM-dd", new Date()),
+          subDays(today, 1)
+        )
+      ) {
+        const workSiteInfo = findWorkSites(
+          value.workSiteId,
+          props.workSiteModels
+        );
+        if (workSiteInfo) {
+          const data = getWorkSiteInfo(value.workDate, workSiteInfo);
+          rows.push(data);
+        }
       }
-    }
-  });
+    });
+  }
 
   return (
     <React.Fragment>

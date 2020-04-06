@@ -14,6 +14,6 @@ export default function Title(props: TitleProps) {
   );
 }
 
-Title.propTypes = {
+Title.defaultProps = {
   children: PropTypes.node,
 };

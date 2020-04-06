@@ -11,8 +11,8 @@ import SendIcon from "@material-ui/icons/Send";
 import Typography from "@material-ui/core/Typography";
 import { format, addDays, addMonths, endOfMonth } from "date-fns";
 
-import ReactCalendar, { CalendarTileProps } from "../../components/Calendar";
-import { UserAvailableDayProps } from "../../model/UserModel";
+import ReactCalendar, { CalendarTileProps } from "../Calendar";
+import { AvailableDayProps } from "../../model/EmployeeModel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,8 +48,8 @@ function getFormatDate(value: Date): string {
 function initUserAvailableDays(
   minDate: Date,
   maxDate: Date
-): UserAvailableDayProps {
-  const userAvailableDays: UserAvailableDayProps = {};
+): AvailableDayProps {
+  const userAvailableDays: AvailableDayProps = {};
   const minDateMonth = getFormatMonth(minDate);
   const maxDateMonth = getFormatMonth(maxDate);
   userAvailableDays[minDateMonth] = {};
@@ -58,7 +58,7 @@ function initUserAvailableDays(
 }
 
 function getUserAvailableDaysChar(
-  userAvailableDays: UserAvailableDayProps,
+  userAvailableDays: AvailableDayProps,
   date: Date
 ): string {
   const month = getFormatMonth(date);
@@ -85,9 +85,9 @@ function getUserAvailableDaysChar(
 }
 
 function incrUserAvailableDaysChar(
-  userAvailableDays: UserAvailableDayProps,
+  userAvailableDays: AvailableDayProps,
   date: Date
-): UserAvailableDayProps {
+): AvailableDayProps {
   const month = getFormatMonth(date);
   const day = getFormatDate(date);
   if (!userAvailableDays[month]) {
@@ -114,7 +114,7 @@ function incrUserAvailableDaysChar(
 }
 
 function getUserAvailableDaysStr(
-  userAvailableDays: UserAvailableDayProps,
+  userAvailableDays: AvailableDayProps,
   available: number
 ): string[] {
   const result: string[] = [];

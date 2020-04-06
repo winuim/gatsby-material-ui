@@ -17,18 +17,16 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import ListIcon from "@material-ui/icons/List";
+import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import TodayIcon from "@material-ui/icons/Today";
-import DashboardIcon from "@material-ui/icons/Dashboard";
 
-import Copyright from "../../components/Copyright";
+import Copyright from "../components/Copyright";
 
 const drawerWidth = 240;
 
@@ -116,7 +114,9 @@ export const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function ListItemLink(props: ListItemProps<"a", { button?: true }>) {
+function ListItemLink(
+  props: ListItemProps<"a", { button?: true }>
+): JSX.Element {
   return <ListItem button component="a" {...props} />;
 }
 
@@ -158,7 +158,10 @@ const Layout: React.FC = ({ children }) => {
             noWrap
             className={classes.title}
           >
-            管理画面
+            {location.hash === "" && "ダッシュボード"}
+            {location.hash === "#todo" && "本日の現場"}
+            {location.hash === "#schedule" && "スケジュール登録"}
+            {location.hash === "#profile" && "プロフィール"}
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -181,41 +184,29 @@ const Layout: React.FC = ({ children }) => {
         </div>
         <Divider />
         <List>
-          <ListItemLink href="/admin/dashboard">
+          <ListItemLink href="/home">
             <ListItemIcon>
-              <DashboardIcon />
+              <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary="管理画面TOP" />
-          </ListItemLink>
-          <ListItemLink href="#usersList">
-            <ListItemIcon>
-              <AccountBoxIcon />
-            </ListItemIcon>
-            <ListItemText primary="従業員一覧" />
-          </ListItemLink>
-          <ListItemLink href="#usersSchedule">
-            <ListItemIcon>
-              <ScheduleIcon />
-            </ListItemIcon>
-            <ListItemText primary="従業員スケジュール" />
-          </ListItemLink>
-          <ListItemLink href="#workSites">
-            <ListItemIcon>
-              <ListIcon />
-            </ListItemIcon>
-            <ListItemText primary="現場一覧" />
-          </ListItemLink>
-          <ListItemLink href="#registWorkSites">
-            <ListItemIcon>
-              <AddCircleIcon />
-            </ListItemIcon>
-            <ListItemText primary="現場登録" />
+            <ListItemText primary="ホーム" />
           </ListItemLink>
           <ListItemLink href="#todo">
             <ListItemIcon>
               <TodayIcon />
             </ListItemIcon>
-            <ListItemText primary="現場報告" />
+            <ListItemText primary="本日の現場" />
+          </ListItemLink>
+          <ListItemLink href="#schedule">
+            <ListItemIcon>
+              <ScheduleIcon />
+            </ListItemIcon>
+            <ListItemText primary="スケジュール登録" />
+          </ListItemLink>
+          <ListItemLink href="#profile">
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary="プロフィール" />
           </ListItemLink>
           <ListItemLink href="#logout">
             <ListItemIcon>

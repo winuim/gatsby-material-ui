@@ -1,4 +1,4 @@
-export interface UserProfileModel {
+export interface ProfileModel {
   userId: string;
   email: string;
   firstName: string;
@@ -18,7 +18,7 @@ export interface UserProfileModel {
   memo?: string;
 }
 
-export interface UserAvailableDayProps {
+export interface AvailableDayProps {
   [month: string]: {
     [day: string]: {
       available: number;
@@ -26,7 +26,7 @@ export interface UserAvailableDayProps {
   };
 }
 
-export interface UserWorkReportProps {
+export interface WorkReportProps {
   workDate: string;
   workSiteId: string;
   prepareTime?: Date;
@@ -41,19 +41,19 @@ export interface UserWorkReportProps {
   report?: string;
 }
 
-export type RequiredUserWorkReportProps = Required<UserWorkReportProps>;
+export type RequiredUserWorkReportProps = Required<WorkReportProps>;
 
 export function filterWorking(
   date: string,
-  models: UserWorkReportProps[]
-): UserWorkReportProps[] {
+  models: WorkReportProps[]
+): WorkReportProps[] {
   const result = models.filter((value) => {
     return value.workDate === date;
   });
   return result;
 }
 
-export const UserProfiles: UserProfileModel[] = [
+export const EmployeeProfiles: ProfileModel[] = [
   {
     userId: "U0000000001",
     firstName: "名",
@@ -116,9 +116,9 @@ export const UserProfiles: UserProfileModel[] = [
   },
 ];
 
-export const MyProfileModel: UserProfileModel = UserProfiles[0];
+export const MyProfileModel: ProfileModel = EmployeeProfiles[0];
 
-export const MyAvailableDaysModel: UserAvailableDayProps = {
+export const MyAvailableDaysModel: AvailableDayProps = {
   "2020-03": {
     "2020-03-30": {
       available: 1,
@@ -129,7 +129,7 @@ export const MyAvailableDaysModel: UserAvailableDayProps = {
   },
 };
 
-export const MyWorkingDayModels: Array<UserWorkReportProps> = [
+export const MyWorkingDayModels: Array<WorkReportProps> = [
   { workDate: "2020-03-20", workSiteId: "W0000000001" },
   { workDate: "2020-03-30", workSiteId: "W0000000002" },
   { workDate: "2020-03-31", workSiteId: "W0000000002" },

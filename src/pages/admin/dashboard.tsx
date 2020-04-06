@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { useLocation } from "@reach/router";
-import { format } from "date-fns";
 
 import SEO from "../../components/Seo";
 import ReactCalendar from "../../components/Calendar";
-import Layout, { useStyles } from "./Layout";
+import Layout, { useStyles } from "../../layout/admin";
 
 const DashboardPage: React.FC = () => {
   const location = useLocation();

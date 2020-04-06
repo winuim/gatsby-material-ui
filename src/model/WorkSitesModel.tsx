@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-interface WorkSiteExtendProps {
+interface WorkSitesExtendProps {
   workDate: string;
   meetingPlace?: string;
   meetingHours?: string;
@@ -16,15 +16,15 @@ interface WorkSiteExtendProps {
   staff?: Array<string>;
 }
 
-export interface WorkSiteProps extends Partial<WorkSiteExtendProps> {
+export interface WorkSiteProps extends Partial<WorkSitesExtendProps> {
   workSiteId: string;
   workSiteName: string;
   workSiteStartDateTime: Date;
   workSiteEndDateTime: Date;
-  extends: Array<WorkSiteExtendProps>;
+  extends: Array<WorkSitesExtendProps>;
 }
 
-type RequiredWorkSiteProps = Required<WorkSiteProps>;
+type RequiredWorkSitesProps = Required<WorkSiteProps>;
 
 const defaultWorkSiteModel: WorkSiteProps = {
   workDate: "2020-01-01",
@@ -35,7 +35,7 @@ const defaultWorkSiteModel: WorkSiteProps = {
   extends: [],
 };
 
-export function findWorkSite(
+export function findWorkSites(
   workSiteId: string,
   models: Array<WorkSiteProps>
 ): WorkSiteProps {
@@ -47,7 +47,7 @@ export function findWorkSite(
 
 export type WorkSiteInfoProps = {
   [P in keyof Omit<
-    RequiredWorkSiteProps,
+    RequiredWorkSitesProps,
     | "workSiteStartDateTime"
     | "workSiteEndDateTime"
     | "extends"

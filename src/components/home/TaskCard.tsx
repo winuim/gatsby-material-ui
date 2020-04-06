@@ -5,14 +5,14 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { format } from "date-fns";
 
-import { UserWorkReportProps, filterWorking } from "../../model/UserModel";
+import { WorkReportProps, filterWorking } from "../../model/EmployeeModel";
 import {
   WorkSiteProps,
   WorkSiteInfoProps,
   InitialWorkSiteInfo,
-  findWorkSite,
+  findWorkSites,
   getWorkSiteInfo,
-} from "../../model/WorkSiteModel";
+} from "../../model/WorkSitesModel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   value: Date;
-  workReportModels: Array<UserWorkReportProps>;
+  workReportModels: Array<WorkReportProps>;
   workSiteModels: Array<WorkSiteProps>;
 }
 
@@ -42,7 +42,7 @@ export default function MyTaskCard(props: Props): JSX.Element {
   const selectedworkReportModels = filterWorking(day, props.workReportModels);
   if (selectedworkReportModels.length > 0) {
     selectedWorkSiteModels = selectedworkReportModels.map((v) => {
-      return findWorkSite(v.workSiteId, props.workSiteModels);
+      return findWorkSites(v.workSiteId, props.workSiteModels);
     });
     workSiteInfo = selectedWorkSiteModels.map((v) => {
       if (v) {
@@ -52,7 +52,7 @@ export default function MyTaskCard(props: Props): JSX.Element {
   }
 
   return (
-    <>
+    <React.Fragment>
       {workSiteInfo.map((element, index) => (
         <div key={index}>
           <Card className={classes.root}>
@@ -100,6 +100,6 @@ export default function MyTaskCard(props: Props): JSX.Element {
           <br />
         </div>
       ))}
-    </>
+    </React.Fragment>
   );
 }
