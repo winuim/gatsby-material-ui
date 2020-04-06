@@ -1,9 +1,9 @@
 import React from "react";
 import Calendar from "react-calendar";
-import "../../styles/Calendar.css";
+import "../styles/Calendar.css";
 
 import Title from "./Title";
-import { isHoliday } from "./HolidayModel";
+import { isHoliday } from "../model/HolidayModel";
 
 export type CalendarViewType = "month" | "year" | "decade" | "century";
 
@@ -15,13 +15,13 @@ export interface CalendarTileProps {
 export interface CalendarProps {
   value: Date;
   title: string;
-  tileContent: ({ date, view }: CalendarTileProps) => JSX.Element;
+  tileContent?: ({ date, view }: CalendarTileProps) => JSX.Element;
   handleOnClickDay: (value: Date) => void;
   minDate?: Date;
   maxDate?: Date;
 }
 
-export default function MyCalendar(props: CalendarProps): JSX.Element {
+export default function ReactCalendar(props: CalendarProps): JSX.Element {
   const tileClassName = ({ date, view }: CalendarTileProps): string => {
     if (view != "month") {
       return "";

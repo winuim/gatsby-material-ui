@@ -1,7 +1,8 @@
 export interface UserProfileModel {
   userId: string;
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   nameKana?: string;
   birthDay?: Date;
   occupation?: string;
@@ -52,11 +53,70 @@ export function filterWorking(
   return result;
 }
 
-export const MyProfileModel: UserProfileModel = {
-  userId: "U0000000001",
-  name: "フル ネーム",
-  email: "test@example.com",
-};
+export const UserProfiles: UserProfileModel[] = [
+  {
+    userId: "U0000000001",
+    firstName: "名",
+    lastName: "姓",
+    email: "test@example.com",
+  },
+  {
+    userId: "U0000000002",
+    firstName: "user2",
+    lastName: "example",
+    email: "user2@example.com",
+  },
+  {
+    userId: "U0000000003",
+    firstName: "user3",
+    lastName: "example",
+    email: "user3@example.com",
+  },
+  {
+    userId: "U0000000004",
+    firstName: "user4",
+    lastName: "example",
+    email: "user4@example.com",
+  },
+  {
+    userId: "U0000000005",
+    firstName: "user5",
+    lastName: "example",
+    email: "user5@example.com",
+  },
+  {
+    userId: "U0000000006",
+    firstName: "user6",
+    lastName: "example",
+    email: "user6@example.com",
+  },
+  {
+    userId: "U0000000007",
+    firstName: "user7",
+    lastName: "example",
+    email: "user7@example.com",
+  },
+  {
+    userId: "U0000000008",
+    firstName: "user8",
+    lastName: "example",
+    email: "user8@example.com",
+  },
+  {
+    userId: "U0000000009",
+    firstName: "user9",
+    lastName: "example",
+    email: "user9@example.com",
+  },
+  {
+    userId: "U0000000010",
+    firstName: "user10",
+    lastName: "example",
+    email: "user10@example.com",
+  },
+];
+
+export const MyProfileModel: UserProfileModel = UserProfiles[0];
 
 export const MyAvailableDaysModel: UserAvailableDayProps = {
   "2020-03": {

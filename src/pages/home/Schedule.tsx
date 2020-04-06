@@ -11,8 +11,8 @@ import SendIcon from "@material-ui/icons/Send";
 import Typography from "@material-ui/core/Typography";
 import { format, addDays, addMonths, endOfMonth } from "date-fns";
 
-import MyCalendar, { CalendarTileProps } from "./Calendar";
-import { UserAvailableDayProps } from "./UserModel";
+import ReactCalendar, { CalendarTileProps } from "../../components/Calendar";
+import { UserAvailableDayProps } from "../../model/UserModel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -177,7 +177,7 @@ export default function MySchedule() {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} lg={6}>
           <Paper className={classes.paper}>
-            <MyCalendar
+            <ReactCalendar
               value={selected.date}
               title="スケジュール登録"
               tileContent={tileContent}

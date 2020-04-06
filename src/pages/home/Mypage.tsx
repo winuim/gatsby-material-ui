@@ -4,15 +4,24 @@ import Paper from "@material-ui/core/Paper";
 import { useLocation } from "@reach/router";
 import { format } from "date-fns";
 
+import ReactCalendar, { CalendarTileProps } from "../../components/Calendar";
 import Layout, { useStyles } from "./Layout";
-import MyCalendar, { CalendarTileProps } from "./Calendar";
 import MyTaskCard from "./TaskCard";
 import MyBacklog from "./Backlog";
 import MyTodo from "./Todo";
 import MySchedule from "./Schedule";
+import MyProfile from "./Profile";
 
-import { MyWorkingDayModels, filterWorking } from "./UserModel";
-import { WorkSiteModels, findWorkSite, getWorkSiteInfo } from "./WorkSiteModel";
+import {
+  MyProfileModel,
+  MyWorkingDayModels,
+  filterWorking,
+} from "../../model/UserModel";
+import {
+  WorkSiteModels,
+  findWorkSite,
+  getWorkSiteInfo,
+} from "../../model/WorkSiteModel";
 
 export default function Mypage(): JSX.Element {
   const location = useLocation();
@@ -51,7 +60,7 @@ export default function Mypage(): JSX.Element {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={8} lg={5}>
             <Paper className={classes.paper}>
-              <MyCalendar
+              <ReactCalendar
                 value={selected}
                 title="カレンダー"
                 tileContent={tileContent}
@@ -86,6 +95,7 @@ export default function Mypage(): JSX.Element {
         />
       )}
       {location.hash === "#schedule" && <MySchedule />}
+      {location.hash === "#profile" && <MyProfile user={MyProfileModel} />}
     </Layout>
   );
 }

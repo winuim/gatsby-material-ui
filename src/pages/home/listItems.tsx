@@ -5,7 +5,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import HomeIcon from "@material-ui/icons/Home";
 import ScheduleIcon from "@material-ui/icons/Schedule";
-import WorkIcon from "@material-ui/icons/Work";
 import TodayIcon from "@material-ui/icons/Today";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";

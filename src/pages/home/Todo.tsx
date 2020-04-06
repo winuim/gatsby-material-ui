@@ -19,8 +19,12 @@ import {
   UserWorkReportProps,
   RequiredUserWorkReportProps,
   filterWorking,
-} from "./UserModel";
-import { WorkSiteProps, findWorkSite, getWorkSiteInfo } from "./WorkSiteModel";
+} from "../../model/UserModel";
+import {
+  WorkSiteProps,
+  findWorkSite,
+  getWorkSiteInfo,
+} from "../../model/WorkSiteModel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -188,7 +192,7 @@ export default function MyTodo(props: Props): JSX.Element {
                       color="textSecondary"
                       gutterBottom
                     >
-                      {selectedDay}のお仕事
+                      {selectedDay}の現場
                     </Typography>
                     <Typography variant="h5" component="h2">
                       {workSiteInfo.workSiteName}

@@ -27,7 +27,7 @@ import Copyright from "../../components/Copyright";
 //   );
 // }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -93,7 +93,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            href="/home"
+            href="#"
           >
             Sign In
           </Button>
@@ -104,7 +104,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

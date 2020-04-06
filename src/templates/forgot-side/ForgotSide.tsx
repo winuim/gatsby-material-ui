@@ -14,6 +14,19 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Copyright from "../../components/Copyright";
 
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {"Copyright © "}
+//       <Link color="inherit" href="https://material-ui.com/">
+//         Your Website
+//       </Link>{" "}
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
+
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -50,11 +63,10 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   success?: string;
   error?: string;
-  signup?: string;
-  forgot?: string;
+  signin?: string;
 }
 
-export default function SignInSide(props: Props) {
+export default function ForgotSide(props: Props) {
   const classes = useStyles();
 
   return (
@@ -67,7 +79,7 @@ export default function SignInSide(props: Props) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Reset Password
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -81,21 +93,6 @@ export default function SignInSide(props: Props) {
               autoComplete="email"
               autoFocus
             />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
             <Button
               type="submit"
               fullWidth
@@ -104,17 +101,12 @@ export default function SignInSide(props: Props) {
               className={classes.submit}
               href={props.success ? props.success : "#"}
             >
-              サインイン
+              パスワードをリセットする
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href={props.forgot ? props.forgot : "#"} variant="body2">
-                  {"パスワード忘れ"}
-                </Link>
-              </Grid>
+            <Grid container justify="flex-end">
               <Grid item>
-                <Link href={props.signup ? props.signup : "#"} variant="body2">
-                  {"新規登録"}
+                <Link href={props.signin ? props.signin : "#"} variant="body2">
+                  {"サインイン"}
                 </Link>
               </Grid>
             </Grid>

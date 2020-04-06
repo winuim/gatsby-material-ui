@@ -7,14 +7,14 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { isAfter, parse, subDays } from "date-fns";
 
-import Title from "./Title";
-import { UserWorkReportProps } from "./UserModel";
+import Title from "../../components/Title";
+import { UserWorkReportProps } from "../../model/UserModel";
 import {
   WorkSiteProps,
   WorkSiteInfoProps,
   findWorkSite,
   getWorkSiteInfo,
-} from "./WorkSiteModel";
+} from "../../model/WorkSiteModel";
 
 function preventDefault(event: React.MouseEvent) {
   event.preventDefault();
