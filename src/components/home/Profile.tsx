@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -17,6 +18,14 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3),
     },
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-start",
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -67,6 +76,15 @@ export default function MyProfile(props: Props): JSX.Element {
             />
           </Grid>
         </Grid>
+        <div className={classes.buttons}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
+            {"更新"}
+          </Button>
+        </div>
       </Paper>
     </React.Fragment>
   );
