@@ -3,7 +3,9 @@ export interface ProfileModel {
   email: string;
   firstName: string;
   lastName: string;
-  nameKana?: string;
+  firstKana?: string;
+  lastKana?: string;
+  displayName?: string;
   birthDay?: Date;
   occupation?: string;
   address?: string;
@@ -117,6 +119,59 @@ export const EmployeeProfiles: ProfileModel[] = [
 ];
 
 export const MyProfileModel: ProfileModel = EmployeeProfiles[0];
+
+export interface EmployeeSchedule {
+  userId: string;
+  month?: string;
+  availableDays?: AvailableDayProps;
+}
+
+export const EmployeeSchedules: EmployeeSchedule[] = [
+  {
+    userId: "U0000000001",
+    month: "2020-04",
+    availableDays: {
+      "2020-04": {
+        "2020-04-01": {
+          available: 1,
+        },
+        "2020-04-02": {
+          available: 2,
+        },
+        "2020-04-03": {
+          available: 3,
+        },
+      },
+    },
+  },
+  {
+    userId: "U0000000002",
+  },
+  {
+    userId: "U0000000003",
+  },
+  {
+    userId: "U0000000004",
+  },
+  {
+    userId: "U0000000005",
+  },
+  {
+    userId: "U0000000006",
+  },
+  {
+    userId: "U0000000007",
+  },
+  {
+    userId: "U0000000008",
+  },
+  {
+    userId: "U0000000009",
+  },
+  {
+    userId: "U0000000010",
+  },
+];
 
 export const MyAvailableDaysModel: AvailableDayProps = {
   "2020-03": {

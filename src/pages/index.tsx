@@ -49,6 +49,7 @@ import CheckboxLabels from "../components/Checkbox/CheckboxLabels";
 import CheckboxesGroup from "../components/Checkbox/CheckboxesGroup";
 import FormControlLabelPosition from "../components/Checkbox/FormControlLabelPosition";
 import CustomizedCheckbox from "../components/Checkbox/CustomizedCheckbox";
+import MaterialTableDemo from "../components/Tables/MaterialTableDemo";
 
 const Index: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -110,6 +111,7 @@ const Index: React.FC = () => {
       <CheckboxesGroup />
       <FormControlLabelPosition />
       <CustomizedCheckbox />
+      <MaterialTableDemo />
       <ProTip />
     </Layout>
   );

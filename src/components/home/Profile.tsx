@@ -46,9 +46,20 @@ export default function MyProfile(props: Props): JSX.Element {
           <Grid item xs={12} sm={6}>
             <TextField
               required
+              id="lastName"
+              name="lastName"
+              label="姓"
+              fullWidth
+              autoComplete="lname"
+              value={props.user ? props.user.lastName : "LastName"}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              required
               id="firstName"
               name="firstName"
-              label="First name"
+              label="名"
               fullWidth
               autoComplete="fname"
               value={props.user ? props.user.firstName : "FirstName"}
@@ -56,13 +67,29 @@ export default function MyProfile(props: Props): JSX.Element {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              required
-              id="lastName"
-              name="lastName"
-              label="Last name"
+              id="lastKana"
+              name="lastKana"
+              label="カナ(姓)"
               fullWidth
-              autoComplete="lname"
-              value={props.user ? props.user.lastName : "LastName"}
+              value={props.user ? props.user.lastKana : ""}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              id="firstKana"
+              name="firstKana"
+              label="カナ(名)"
+              fullWidth
+              value={props.user ? props.user.firstKana : ""}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="displayName"
+              name="displayName"
+              label="表示名"
+              fullWidth
+              value={props.user ? props.user.displayName : ""}
             />
           </Grid>
           <Grid item xs={12}>
@@ -70,7 +97,7 @@ export default function MyProfile(props: Props): JSX.Element {
               required
               id="email"
               name="email"
-              label="E-mail"
+              label="E-mailアドレス"
               fullWidth
               value={props.user ? props.user.email : "email address"}
             />
