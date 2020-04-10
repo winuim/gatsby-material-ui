@@ -6,13 +6,10 @@ import { useLocation } from "@reach/router";
 import Layout, { useStyles } from "../../layout/admin";
 import SEO from "../../components/Seo";
 import ReactCalendar from "../../components/Calendar";
-import EmployeeList from "../../components/admin/Employeelist";
+import EmployeeList from "../../components/admin/EmployeeList";
 import EmployeeScheduleList from "../../components/admin/EmployeeScheduleList";
 
-import {
-  EmployeeProfiles,
-  EmployeeSchedules,
-} from "../../models/EmployeeModel";
+import { EmployeeProfiles, EmployeeSchedules } from "../../models/dummyModels";
 
 const DashboardPage: React.FC = () => {
   const location = useLocation();

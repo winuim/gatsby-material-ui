@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-interface WorkSitesExtendProps {
+export interface WorkSitesExtendProps {
   workDate: string;
   meetingPlace?: string;
   meetingHours?: string;
@@ -24,9 +24,9 @@ export interface WorkSiteProps extends Partial<WorkSitesExtendProps> {
   extends: Array<WorkSitesExtendProps>;
 }
 
-type RequiredWorkSitesProps = Required<WorkSiteProps>;
+export type RequiredWorkSitesProps = Required<WorkSiteProps>;
 
-const defaultWorkSiteModel: WorkSiteProps = {
+export const defaultWorkSiteModel: WorkSiteProps = {
   workDate: "2020-01-01",
   workSiteId: "エラー",
   workSiteName: "エラー",
@@ -152,105 +152,3 @@ export function getWorkSiteInfo(
     staff: staff ? staff.join(",") : "未定",
   };
 }
-
-export const WorkSiteModels: Array<WorkSiteProps> = [
-  {
-    workSiteId: "W0000000001",
-    workSiteName: "現場A",
-    workSiteStartDateTime: new Date("2020-03-20T00:00:00.000Z"),
-    workSiteEndDateTime: new Date("2020-03-20T23:59:59.000Z"),
-    workStartTime: "10:00",
-    workEndTime: "19:00",
-    extends: [],
-  },
-  {
-    workSiteId: "W0000000002",
-    workSiteName: "現場B",
-    workSiteStartDateTime: new Date("2020-03-30T00:00:00.000Z"),
-    workSiteEndDateTime: new Date("2020-03-31T23:59:59.000Z"),
-    workStartTime: "10:00",
-    workEndTime: "19:00",
-    meetingPlace: "集合場所A",
-    meetingHours: "09:30",
-    clothes: "服装A",
-    items: "持ち物A",
-    remarks: "特記事項A...",
-    contactDeparture: "スタッフA",
-    contactWorkStart: "スタッフB",
-    constactWorkEnd: "スタッフC",
-    staff: ["スタッフD", "スタッフE"],
-    extends: [{ workDate: "2020-03-31", workEndTime: "20:00" }],
-  },
-  {
-    workSiteId: "W0000000003",
-    workSiteName: "現場C",
-    workSiteStartDateTime: new Date("2020-04-01T00:00:00.000Z"),
-    workSiteEndDateTime: new Date("2020-04-07T23:59:59.000Z"),
-    workStartTime: "10:00",
-    workEndTime: "19:00",
-    meetingPlace: "集合場所C",
-    meetingHours: "09:30",
-    clothes: "服装C",
-    items: "持ち物C",
-    remarks: "特記事項C...",
-    contactDeparture: "スタッフA",
-    contactWorkStart: "スタッフB",
-    constactWorkEnd: "スタッフC",
-    staff: ["スタッフD", "スタッフE"],
-    extends: [{ workDate: "2020-04-01", workStartTime: "15:00" }],
-  },
-  {
-    workSiteId: "W0000000004",
-    workSiteName: "現場D",
-    workSiteStartDateTime: new Date("2020-04-08T00:00:00.000Z"),
-    workSiteEndDateTime: new Date("2020-04-15T23:59:59.000Z"),
-    workStartTime: "10:00",
-    workEndTime: "19:00",
-    meetingPlace: "集合場所C",
-    meetingHours: "09:30",
-    clothes: "服装C",
-    items: "持ち物C",
-    remarks: "特記事項C...",
-    contactDeparture: "スタッフA",
-    contactWorkStart: "スタッフB",
-    constactWorkEnd: "スタッフC",
-    staff: ["スタッフD", "スタッフE"],
-    extends: [],
-  },
-  {
-    workSiteId: "W0000000005",
-    workSiteName: "現場E",
-    workSiteStartDateTime: new Date("2020-04-16T00:00:00.000Z"),
-    workSiteEndDateTime: new Date("2020-04-23T23:59:59.000Z"),
-    workStartTime: "09:30",
-    workEndTime: "19:00",
-    meetingPlace: "集合場所C",
-    meetingHours: "09:00",
-    clothes: "服装A",
-    items: "持ち物A",
-    remarks: "特記事項C...",
-    contactDeparture: "スタッフA",
-    contactWorkStart: "スタッフB",
-    constactWorkEnd: "スタッフC",
-    staff: ["スタッフD", "スタッフE"],
-    extends: [],
-  },
-  {
-    workSiteId: "W0000000006",
-    workSiteName: "現場F",
-    workSiteStartDateTime: new Date("2020-04-01T00:00:00.000Z"),
-    workSiteEndDateTime: new Date("2020-04-01T23:59:59.000Z"),
-    workStartTime: "09:00",
-    workEndTime: "14:00",
-    meetingPlace: "集合場所C",
-    meetingHours: "08:30",
-    clothes: "服装A",
-    items: "持ち物A",
-    remarks: "特記事項C...",
-    contactDeparture: "スタッフA",
-    contactWorkStart: "スタッフB",
-    constactWorkEnd: "スタッフC",
-    staff: ["スタッフD", "スタッフE"],
-    extends: [],
-  },
-];

@@ -13,16 +13,13 @@ import MyTodo from "../../components/home/Todo";
 import MySchedule from "../../components/home/Schedule";
 import MyProfile from "../../components/home/Profile";
 
+import { filterWorking } from "../../models/EmployeeModel";
+import { findWorkSites, getWorkSiteInfo } from "../../models/WorkSitesModel";
 import {
   MyProfileModel,
   MyWorkingDayModels,
-  filterWorking,
-} from "../../models/EmployeeModel";
-import {
   WorkSiteModels,
-  findWorkSites,
-  getWorkSiteInfo,
-} from "../../models/WorkSitesModel";
+} from "../../models/dummyModels";
 
 const HomeIndexPage: React.FC = () => {
   const location = useLocation();

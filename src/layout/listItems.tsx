@@ -2,18 +2,14 @@ import React from "react";
 import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
 
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import HomeIcon from "@material-ui/icons/Home";
 import ListIcon from "@material-ui/icons/List";
-import MenuIcon from "@material-ui/icons/Menu";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import TodayIcon from "@material-ui/icons/Today";
 
@@ -66,17 +62,11 @@ export const adminListItems = (
       </ListItemIcon>
       <ListItemText primary="管理画面TOP" />
     </ListItemLink>
-    <ListItemLink href="/admin/dashboard#employeeList">
+    <ListItemLink href="/admin/dashboard#todo">
       <ListItemIcon>
-        <AccountBoxIcon />
+        <TodayIcon />
       </ListItemIcon>
-      <ListItemText primary="従業員一覧" />
-    </ListItemLink>
-    <ListItemLink href="/admin/dashboard#employeeSchedule">
-      <ListItemIcon>
-        <ScheduleIcon />
-      </ListItemIcon>
-      <ListItemText primary="従業員スケジュール" />
+      <ListItemText primary="現場報告" />
     </ListItemLink>
     <ListItemLink href="/admin/dashboard#workSites">
       <ListItemIcon>
@@ -90,11 +80,17 @@ export const adminListItems = (
       </ListItemIcon>
       <ListItemText primary="現場登録" />
     </ListItemLink>
-    <ListItemLink href="/admin/dashboard#todo">
+    <ListItemLink href="/admin/dashboard#employeeSchedule">
       <ListItemIcon>
-        <TodayIcon />
+        <ScheduleIcon />
       </ListItemIcon>
-      <ListItemText primary="現場報告" />
+      <ListItemText primary="従業員提出スケジュール" />
+    </ListItemLink>
+    <ListItemLink href="/admin/dashboard#employeeList">
+      <ListItemIcon>
+        <AccountBoxIcon />
+      </ListItemIcon>
+      <ListItemText primary="従業員一覧" />
     </ListItemLink>
     <ListItemLink href="/admin/dashboard#logout">
       <ListItemIcon>

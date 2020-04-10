@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import MaterialTable, { Column } from "material-table";
+import MUIDataTable, {
+  MUIDataTableColumn,
+  MUIDataTableOptions,
+} from "mui-datatables";
 
 import { ProfileModelProps } from "../../models/EmployeeModel";
 
@@ -18,60 +21,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface TableState {
-  columns: Array<Column<ProfileModelProps>>;
-  data: ProfileModelProps[];
-}
-
 interface Props {
   data: ProfileModelProps[];
 }
 
 export default function EmployeeList(props: Props) {
   const classes = useStyles();
-  const [state, setState] = useState<TableState>({
-    columns: [
-      { title: "従業員ID", field: "userId" },
-      { title: "E-mail", field: "email" },
-      { title: "姓", field: "lastName" },
-      { title: "名", field: "firstName" },
-      { title: "カナ(姓)", field: "lastKana" },
-      { title: "カナ(名)", field: "firstKana" },
-      { title: "表示名", field: "displayName" },
-    ],
-    data: props.data,
-  });
+  const columns: MUIDataTableColumn[] = [
+    { name: "userId", label: "従業員ID" },
+    { name: "email", label: "E-mail" },
+    { name: "lastName", label: "姓" },
+    { name: "firstName", label: "名" },
+    { name: "lastKana", label: "カナ(姓)" },
+    { name: "firstKana", label: "カナ(名)" },
+    { name: "displayName", label: "表示名" },
+  ];
+
+  const options: MUIDataTableOptions = {
+    filterType: "checkbox",
+    selectableRows: "none",
+    downloadOptions: {
+      filename: "employeeList.csv",
+    },
+  };
 
   return (
     <React.Fragment>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      />
       <Paper className={classes.paper}>
-        <MaterialTable
-          title="従業員一覧"
-          columns={state.columns}
-          data={state.data}
-          editable={{
-            onRowUpdate: (newData, oldData) =>
-              new Promise((resolve) => {
-                setTimeout(() => {
-                  resolve();
-                  if (oldData) {
-                    setState((prevState) => {
-                      const data = [...prevState.data];
-                      data[data.indexOf(oldData)] = newData;
-                      return { ...prevState, data };
-                    });
-                  }
-                }, 600);
-              }),
-          }}
-          options={{
-            exportButton: true,
-            actionsColumnIndex: -1,
-          }}
+        <MUIDataTable
+          title={"従業員一覧"}
+          data={props.data}
+          columns={columns}
+          options={options}
         />
       </Paper>
     </React.Fragment>
