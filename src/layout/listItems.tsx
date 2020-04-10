@@ -31,25 +31,25 @@ export const homeListItems = (
       </ListItemIcon>
       <ListItemText primary="ホーム" />
     </ListItemLink>
-    <ListItemLink href="#todo">
+    <ListItemLink href="/home#todo">
       <ListItemIcon>
         <TodayIcon />
       </ListItemIcon>
       <ListItemText primary="本日の現場" />
     </ListItemLink>
-    <ListItemLink href="#schedule">
+    <ListItemLink href="/home#schedule">
       <ListItemIcon>
         <ScheduleIcon />
       </ListItemIcon>
       <ListItemText primary="スケジュール登録" />
     </ListItemLink>
-    <ListItemLink href="#profile">
+    <ListItemLink href="/home#profile">
       <ListItemIcon>
         <AccountCircleIcon />
       </ListItemIcon>
       <ListItemText primary="プロフィール" />
     </ListItemLink>
-    <ListItemLink href="#logout">
+    <ListItemLink href="/home#logout">
       <ListItemIcon>
         <ExitToAppIcon />
       </ListItemIcon>
@@ -66,37 +66,37 @@ export const adminListItems = (
       </ListItemIcon>
       <ListItemText primary="管理画面TOP" />
     </ListItemLink>
-    <ListItemLink href="#employeeList">
+    <ListItemLink href="/admin/dashboard#employeeList">
       <ListItemIcon>
         <AccountBoxIcon />
       </ListItemIcon>
       <ListItemText primary="従業員一覧" />
     </ListItemLink>
-    <ListItemLink href="#employeeSchedule">
+    <ListItemLink href="/admin/dashboard#employeeSchedule">
       <ListItemIcon>
         <ScheduleIcon />
       </ListItemIcon>
       <ListItemText primary="従業員スケジュール" />
     </ListItemLink>
-    <ListItemLink href="#workSites">
+    <ListItemLink href="/admin/dashboard#workSites">
       <ListItemIcon>
         <ListIcon />
       </ListItemIcon>
       <ListItemText primary="現場一覧" />
     </ListItemLink>
-    <ListItemLink href="#registWorkSites">
+    <ListItemLink href="/admin/dashboard#registWorkSites">
       <ListItemIcon>
         <AddCircleIcon />
       </ListItemIcon>
       <ListItemText primary="現場登録" />
     </ListItemLink>
-    <ListItemLink href="#todo">
+    <ListItemLink href="/admin/dashboard#todo">
       <ListItemIcon>
         <TodayIcon />
       </ListItemIcon>
       <ListItemText primary="現場報告" />
     </ListItemLink>
-    <ListItemLink href="#logout">
+    <ListItemLink href="/admin/dashboard#logout">
       <ListItemIcon>
         <ExitToAppIcon />
       </ListItemIcon>

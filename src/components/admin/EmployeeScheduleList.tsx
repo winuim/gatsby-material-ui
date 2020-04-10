@@ -1,8 +1,24 @@
 import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
 import MaterialTable, { Column } from "material-table";
-import { EmployeeScheduleProps } from "../../models/EmployeeModel";
 import { endOfMonth, parse } from "date-fns/esm";
 import { addDays, format } from "date-fns";
+
+import { EmployeeScheduleProps } from "../../models/EmployeeModel";
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3),
+    },
+  },
+}));
 
 interface TableState {
   columns: Array<Column<EmployeeScheduleProps>>;
@@ -14,6 +30,8 @@ interface Props {
 }
 
 export default function EmployeeScheduleList(props: Props) {
+  const classes = useStyles();
+
   const month = "2020-04";
   const startDate = parse(month + "-01", "yyyy-MM-dd", new Date());
   const endDate = endOfMonth(startDate);
@@ -50,19 +68,21 @@ export default function EmployeeScheduleList(props: Props) {
   });
 
   return (
-    <div>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      />
-      <MaterialTable
-        title="従業員スケジュール"
-        columns={state.columns}
-        data={state.data}
-        options={{
-          exportButton: true,
-        }}
-      />
-    </div>
+    <React.Fragment>
+      <Paper className={classes.paper}>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <MaterialTable
+          title="従業員スケジュール"
+          columns={state.columns}
+          data={state.data}
+          options={{
+            exportButton: true,
+          }}
+        />
+      </Paper>
+    </React.Fragment>
   );
 }
