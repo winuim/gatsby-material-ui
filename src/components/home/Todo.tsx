@@ -19,12 +19,12 @@ import {
   WorkReportProps,
   RequiredUserWorkReportProps,
   filterWorking,
-} from "../../model/EmployeeModel";
+} from "../../models/EmployeeModel";
 import {
   WorkSiteProps,
   findWorkSites,
   getWorkSiteInfo,
-} from "../../model/WorkSitesModel";
+} from "../../models/WorkSitesModel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

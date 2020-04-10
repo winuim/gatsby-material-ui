@@ -12,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import { format, addDays, addMonths, endOfMonth } from "date-fns";
 
 import ReactCalendar, { CalendarTileProps } from "../Calendar";
-import { AvailableDayProps } from "../../model/EmployeeModel";
+import { AvailableDayProps } from "../../models/EmployeeModel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

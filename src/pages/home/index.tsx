@@ -17,12 +17,12 @@ import {
   MyProfileModel,
   MyWorkingDayModels,
   filterWorking,
-} from "../../model/EmployeeModel";
+} from "../../models/EmployeeModel";
 import {
   WorkSiteModels,
   findWorkSites,
   getWorkSiteInfo,
-} from "../../model/WorkSitesModel";
+} from "../../models/WorkSitesModel";
 
 const HomeIndexPage: React.FC = () => {
   const location = useLocation();

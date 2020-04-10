@@ -106,7 +106,7 @@ export default function ForgotSide(props: Props) {
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href={props.signin ? props.signin : "#"} variant="body2">
-                  {"サインイン"}
+                  {"サインインに戻る"}
                 </Link>
               </Grid>
             </Grid>

@@ -6,9 +6,13 @@ import { useLocation } from "@reach/router";
 import Layout, { useStyles } from "../../layout/admin";
 import SEO from "../../components/Seo";
 import ReactCalendar from "../../components/Calendar";
-import Employeelist from "../../components/admin/Employeelist";
+import EmployeeList from "../../components/admin/Employeelist";
+import EmployeeScheduleList from "../../components/admin/EmployeeScheduleList";
 
-import { EmployeeProfiles } from "../../model/EmployeeModel";
+import {
+  EmployeeProfiles,
+  EmployeeSchedules,
+} from "../../models/EmployeeModel";
 
 const DashboardPage: React.FC = () => {
   const location = useLocation();
@@ -43,7 +47,10 @@ const DashboardPage: React.FC = () => {
           </Grid>
         )}
         {location.hash === "#employeeList" && (
-          <Employeelist data={EmployeeProfiles} />
+          <EmployeeList data={EmployeeProfiles} />
+        )}
+        {location.hash === "#employeeSchedule" && (
+          <EmployeeScheduleList data={EmployeeSchedules} />
         )}
       </Layout>
     </div>

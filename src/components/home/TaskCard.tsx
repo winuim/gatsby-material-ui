@@ -5,14 +5,14 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { format } from "date-fns";
 
-import { WorkReportProps, filterWorking } from "../../model/EmployeeModel";
+import { WorkReportProps, filterWorking } from "../../models/EmployeeModel";
 import {
   WorkSiteProps,
   WorkSiteInfoProps,
   InitialWorkSiteInfo,
   findWorkSites,
   getWorkSiteInfo,
-} from "../../model/WorkSitesModel";
+} from "../../models/WorkSitesModel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

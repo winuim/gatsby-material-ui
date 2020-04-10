@@ -8,13 +8,13 @@ import TableRow from "@material-ui/core/TableRow";
 import { isAfter, parse, subDays } from "date-fns";
 
 import Title from "../Title";
-import { WorkReportProps } from "../../model/EmployeeModel";
+import { WorkReportProps } from "../../models/EmployeeModel";
 import {
   WorkSiteProps,
   WorkSiteInfoProps,
   findWorkSites,
   getWorkSiteInfo,
-} from "../../model/WorkSitesModel";
+} from "../../models/WorkSitesModel";
 
 function preventDefault(event: React.MouseEvent) {
   event.preventDefault();

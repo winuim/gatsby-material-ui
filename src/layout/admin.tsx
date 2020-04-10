@@ -11,23 +11,14 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
-import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import ListIcon from "@material-ui/icons/List";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import ScheduleIcon from "@material-ui/icons/Schedule";
-import TodayIcon from "@material-ui/icons/Today";
-import DashboardIcon from "@material-ui/icons/Dashboard";
 
+import { adminListItems, homeListItems } from "./listItems";
 import Copyright from "../components/Copyright";
 
 const drawerWidth = 240;
@@ -116,10 +107,6 @@ export const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function ListItemLink(props: ListItemProps<"a", { button?: true }>) {
-  return <ListItem button component="a" {...props} />;
-}
-
 const Layout: React.FC = ({ children }) => {
   const location = useLocation();
   const classes = useStyles();
@@ -180,50 +167,9 @@ const Layout: React.FC = ({ children }) => {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          <ListItemLink href="/admin/dashboard">
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="管理画面TOP" />
-          </ListItemLink>
-          <ListItemLink href="#employeeList">
-            <ListItemIcon>
-              <AccountBoxIcon />
-            </ListItemIcon>
-            <ListItemText primary="従業員一覧" />
-          </ListItemLink>
-          <ListItemLink href="#employeeSchedule">
-            <ListItemIcon>
-              <ScheduleIcon />
-            </ListItemIcon>
-            <ListItemText primary="従業員スケジュール" />
-          </ListItemLink>
-          <ListItemLink href="#workSites">
-            <ListItemIcon>
-              <ListIcon />
-            </ListItemIcon>
-            <ListItemText primary="現場一覧" />
-          </ListItemLink>
-          <ListItemLink href="#registWorkSites">
-            <ListItemIcon>
-              <AddCircleIcon />
-            </ListItemIcon>
-            <ListItemText primary="現場登録" />
-          </ListItemLink>
-          <ListItemLink href="#todo">
-            <ListItemIcon>
-              <TodayIcon />
-            </ListItemIcon>
-            <ListItemText primary="現場報告" />
-          </ListItemLink>
-          <ListItemLink href="#logout">
-            <ListItemIcon>
-              <ExitToAppIcon />
-            </ListItemIcon>
-            <ListItemText primary="ログアウト" />
-          </ListItemLink>
-        </List>
+        <List>{adminListItems}</List>
+        <Divider />
+        <List>{homeListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

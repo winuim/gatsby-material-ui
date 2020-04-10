@@ -11,21 +11,14 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
-import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import ScheduleIcon from "@material-ui/icons/Schedule";
-import TodayIcon from "@material-ui/icons/Today";
 
+import { adminListItems, homeListItems } from "./listItems";
 import Copyright from "../components/Copyright";
 
 const drawerWidth = 240;
@@ -114,12 +107,6 @@ export const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function ListItemLink(
-  props: ListItemProps<"a", { button?: true }>
-): JSX.Element {
-  return <ListItem button component="a" {...props} />;
-}
-
 const Layout: React.FC = ({ children }) => {
   const location = useLocation();
   const classes = useStyles();
@@ -158,10 +145,7 @@ const Layout: React.FC = ({ children }) => {
             noWrap
             className={classes.title}
           >
-            {location.hash === "" && "ダッシュボード"}
-            {location.hash === "#todo" && "本日の現場"}
-            {location.hash === "#schedule" && "スケジュール登録"}
-            {location.hash === "#profile" && "プロフィール"}
+            ダッシュボード
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -183,38 +167,9 @@ const Layout: React.FC = ({ children }) => {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          <ListItemLink href="/home">
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="ホーム" />
-          </ListItemLink>
-          <ListItemLink href="#todo">
-            <ListItemIcon>
-              <TodayIcon />
-            </ListItemIcon>
-            <ListItemText primary="本日の現場" />
-          </ListItemLink>
-          <ListItemLink href="#schedule">
-            <ListItemIcon>
-              <ScheduleIcon />
-            </ListItemIcon>
-            <ListItemText primary="スケジュール登録" />
-          </ListItemLink>
-          <ListItemLink href="#profile">
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText primary="プロフィール" />
-          </ListItemLink>
-          <ListItemLink href="#logout">
-            <ListItemIcon>
-              <ExitToAppIcon />
-            </ListItemIcon>
-            <ListItemText primary="ログアウト" />
-          </ListItemLink>
-        </List>
+        <List>{homeListItems}</List>
+        <Divider />
+        <List>{adminListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

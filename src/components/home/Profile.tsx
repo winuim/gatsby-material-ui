@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 
-import { ProfileModel } from "../../model/EmployeeModel";
+import { ProfileModelProps } from "../../models/EmployeeModel";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  user: ProfileModel;
+  user: ProfileModelProps;
 }
 
 export default function MyProfile(props: Props): JSX.Element {

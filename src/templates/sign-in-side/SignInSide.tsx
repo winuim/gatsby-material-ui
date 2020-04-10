@@ -109,12 +109,12 @@ export default function SignInSide(props: Props) {
             <Grid container>
               <Grid item xs>
                 <Link href={props.forgot ? props.forgot : "#"} variant="body2">
-                  {"パスワード忘れ"}
+                  {"サインインできない場合"}
                 </Link>
               </Grid>
               <Grid item>
                 <Link href={props.signup ? props.signup : "#"} variant="body2">
-                  {"新規登録"}
+                  {"アカウントを作成"}
                 </Link>
               </Grid>
             </Grid>

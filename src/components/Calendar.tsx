@@ -3,7 +3,7 @@ import Calendar from "react-calendar";
 import "../styles/Calendar.css";
 
 import Title from "./Title";
-import { isHoliday } from "../model/HolidayModel";
+import { isHoliday } from "../models/HolidayModel";
 
 export type CalendarViewType = "month" | "year" | "decade" | "century";
 

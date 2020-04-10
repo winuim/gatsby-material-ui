@@ -128,7 +128,7 @@ export default function SignUpSide(props: Props) {
             <Grid container justify="flex-end">
               <Grid item>
                 <Link href={props.signin ? props.signin : "#"} variant="body2">
-                  {"サインイン"}
+                  {"アカウントをお持ちの場合は、サインイン"}
                 </Link>
               </Grid>
             </Grid>

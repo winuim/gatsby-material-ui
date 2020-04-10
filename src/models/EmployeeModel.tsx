@@ -1,4 +1,4 @@
-export interface ProfileModel {
+export interface ProfileModelProps {
   userId: string;
   email: string;
   firstName: string;
@@ -20,12 +20,19 @@ export interface ProfileModel {
   memo?: string;
 }
 
-export interface AvailableDayProps {
-  [month: string]: {
-    [day: string]: {
-      available: number;
-    };
+export interface AvailableDayMap {
+  [day: string]: {
+    available: number;
   };
+}
+
+export interface AvailableDayProps {
+  [month: string]: AvailableDayMap;
+}
+
+export interface EmployeeScheduleProps {
+  userId: string;
+  [x: string]: number | string;
 }
 
 export interface WorkReportProps {
@@ -55,7 +62,7 @@ export function filterWorking(
   return result;
 }
 
-export const EmployeeProfiles: ProfileModel[] = [
+export const EmployeeProfiles: ProfileModelProps[] = [
   {
     userId: "U0000000001",
     firstName: "名",
@@ -118,31 +125,15 @@ export const EmployeeProfiles: ProfileModel[] = [
   },
 ];
 
-export const MyProfileModel: ProfileModel = EmployeeProfiles[0];
+export const MyProfileModel: ProfileModelProps = EmployeeProfiles[0];
 
-export interface EmployeeSchedule {
-  userId: string;
-  month?: string;
-  availableDays?: AvailableDayProps;
-}
-
-export const EmployeeSchedules: EmployeeSchedule[] = [
+export const EmployeeSchedules: EmployeeScheduleProps[] = [
   {
     userId: "U0000000001",
-    month: "2020-04",
-    availableDays: {
-      "2020-04": {
-        "2020-04-01": {
-          available: 1,
-        },
-        "2020-04-02": {
-          available: 2,
-        },
-        "2020-04-03": {
-          available: 3,
-        },
-      },
-    },
+    "2020-04-01": 1,
+    "2020-04-02": 2,
+    "2020-04-03": 3,
+    "2020-04-04": 1,
   },
   {
     userId: "U0000000002",
