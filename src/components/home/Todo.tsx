@@ -98,13 +98,13 @@ export default function MyTodo(props: Props): JSX.Element {
       };
     }
   );
-  const [SelectedData, setSelectedData] = useState(initialDate);
-  const handleDataChange = (
+  const [values, setValues] = useState(initialDate);
+  const handleChange = (
     changeData: Partial<RequiredUserWorkReportProps>,
     index: number
   ): void => {
     console.log(JSON.stringify(changeData) + ", " + index);
-    const updateDate = SelectedData.slice(0);
+    const updateDate = values.slice(0);
     if (changeData.prepareTime) {
       updateDate[index].prepareTime = changeData.prepareTime;
     }
@@ -135,10 +135,10 @@ export default function MyTodo(props: Props): JSX.Element {
     if (changeData.report) {
       updateDate[index].report = changeData.report;
     }
-    setSelectedData(updateDate);
+    setValues(updateDate);
   };
   const handlePrepareMail = (index: number): void => {
-    const nowTime = format(SelectedData[index].prepareTime as Date, "HH:mm");
+    const nowTime = format(values[index].prepareTime as Date, "HH:mm");
     const subject: string = encodeURIComponent("準備開始報告 ○○○○ " + nowTime);
     const body: string = encodeURIComponent(
       "おはようございます。\n今から準備開始します。\n"
@@ -146,7 +146,7 @@ export default function MyTodo(props: Props): JSX.Element {
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
   const handleDepartureMail = (index: number): void => {
-    const nowTime = format(SelectedData[index].departureTime as Date, "HH:mm");
+    const nowTime = format(values[index].departureTime as Date, "HH:mm");
     const subject: string = encodeURIComponent("出発報告 ○○○○ " + nowTime);
     const body: string = encodeURIComponent(
       "お疲れ様です。\n今から出発します。\nよろしくお願いします。\n"
@@ -163,15 +163,15 @@ export default function MyTodo(props: Props): JSX.Element {
       "【日付】" + selectedDay,
       "【現場名】" + selectedWorkSiteModels[index].workSiteName,
       "【勤務時間】" +
-        format(SelectedData[index].workStartTime as Date, "HH:mm") +
+        format(values[index].workStartTime as Date, "HH:mm") +
         " 〜 " +
-        format(SelectedData[index].workEndTime as Date, "HH:mm"),
-      "【休憩時間】" + SelectedData[index].breakTime,
-      "【交通費・往復】" + SelectedData[index].expenses,
-      "【公共交通機関利用区間】" + SelectedData[index].section,
+        format(values[index].workEndTime as Date, "HH:mm"),
+      "【休憩時間】" + values[index].breakTime,
+      "【交通費・往復】" + values[index].expenses,
+      "【公共交通機関利用区間】" + values[index].section,
       "【公共交通機関利用開始時間】" +
-        format(SelectedData[index].trainDepartureTime as Date, "HH:mm"),
-      "【報告事項】" + SelectedData[index].report,
+        format(values[index].trainDepartureTime as Date, "HH:mm"),
+      "【報告事項】" + values[index].report,
     ];
     const body: string = encodeURIComponent(bodyMain.join("\n"));
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
@@ -229,12 +229,9 @@ export default function MyTodo(props: Props): JSX.Element {
                       <div>
                         <TimePicker
                           label="準備開始"
-                          value={SelectedData[index].prepareTime}
+                          value={values[index].prepareTime}
                           onChange={(date): void =>
-                            handleDataChange(
-                              { prepareTime: date as Date },
-                              index
-                            )
+                            handleChange({ prepareTime: date as Date }, index)
                           }
                           showTodayButton={true}
                           todayLabel="現在時刻"
@@ -254,12 +251,9 @@ export default function MyTodo(props: Props): JSX.Element {
                       <div>
                         <TimePicker
                           label="出発"
-                          value={SelectedData[index].departureTime}
+                          value={values[index].departureTime}
                           onChange={(date): void =>
-                            handleDataChange(
-                              { departureTime: date as Date },
-                              index
-                            )
+                            handleChange({ departureTime: date as Date }, index)
                           }
                           showTodayButton={true}
                           todayLabel="現在時刻"
@@ -280,9 +274,9 @@ export default function MyTodo(props: Props): JSX.Element {
                       <div>
                         <TimePicker
                           label="公共交通機関利用開始時間"
-                          value={SelectedData[index].trainDepartureTime}
+                          value={values[index].trainDepartureTime}
                           onChange={(date): void =>
-                            handleDataChange(
+                            handleChange(
                               { trainDepartureTime: date as Date },
                               index
                             )
@@ -293,12 +287,9 @@ export default function MyTodo(props: Props): JSX.Element {
                         />
                         <TimePicker
                           label="集合時間"
-                          value={SelectedData[index].arrivalTime}
+                          value={values[index].arrivalTime}
                           onChange={(date): void =>
-                            handleDataChange(
-                              { arrivalTime: date as Date },
-                              index
-                            )
+                            handleChange({ arrivalTime: date as Date }, index)
                           }
                           showTodayButton={true}
                           todayLabel="現在時刻"
@@ -306,12 +297,9 @@ export default function MyTodo(props: Props): JSX.Element {
                         />
                         <TimePicker
                           label="開始時間"
-                          value={SelectedData[index].workStartTime}
+                          value={values[index].workStartTime}
                           onChange={(date): void =>
-                            handleDataChange(
-                              { workStartTime: date as Date },
-                              index
-                            )
+                            handleChange({ workStartTime: date as Date }, index)
                           }
                           showTodayButton={true}
                           todayLabel="現在時刻"
@@ -319,12 +307,9 @@ export default function MyTodo(props: Props): JSX.Element {
                         />
                         <TimePicker
                           label="終了時間"
-                          value={SelectedData[index].workEndTime}
+                          value={values[index].workEndTime}
                           onChange={(date): void =>
-                            handleDataChange(
-                              { workEndTime: date as Date },
-                              index
-                            )
+                            handleChange({ workEndTime: date as Date }, index)
                           }
                           showTodayButton={true}
                           todayLabel="現在時刻"
@@ -336,9 +321,9 @@ export default function MyTodo(props: Props): JSX.Element {
                           InputLabelProps={{
                             shrink: true,
                           }}
-                          defaultValue={SelectedData[index].breakTime}
+                          defaultValue={values[index].breakTime}
                           onChange={(e): void =>
-                            handleDataChange(
+                            handleChange(
                               { breakTime: parseInt(e.target.value) },
                               index
                             )
@@ -353,7 +338,7 @@ export default function MyTodo(props: Props): JSX.Element {
                               shrink: true,
                             }}
                             onChange={(e): void =>
-                              handleDataChange(
+                              handleChange(
                                 { expenses: parseInt(e.target.value) },
                                 index
                               )
@@ -363,10 +348,7 @@ export default function MyTodo(props: Props): JSX.Element {
                           <TextField
                             label="区間"
                             onChange={(e): void =>
-                              handleDataChange(
-                                { section: e.target.value },
-                                index
-                              )
+                              handleChange({ section: e.target.value }, index)
                             }
                             disabled={workSiteInfoDisabled}
                           />
@@ -376,7 +358,7 @@ export default function MyTodo(props: Props): JSX.Element {
                           multiline
                           rows="4"
                           onChange={(e): void =>
-                            handleDataChange({ report: e.target.value }, index)
+                            handleChange({ report: e.target.value }, index)
                           }
                           disabled={workSiteInfoDisabled}
                         />

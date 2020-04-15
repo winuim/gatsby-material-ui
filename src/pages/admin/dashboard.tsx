@@ -15,7 +15,7 @@ const DashboardPage: React.FC = () => {
   const location = useLocation();
   const classes = useStyles();
   const [selected, setSelected] = useState(new Date());
-  const handleOnClickDay = (value: Date): void => {
+  const handleClickDay = (value: Date): void => {
     console.debug(`handleOnClick(${value})`);
     setSelected(value);
   };
@@ -31,7 +31,7 @@ const DashboardPage: React.FC = () => {
                 <ReactCalendar
                   value={selected}
                   title="カレンダー"
-                  handleOnClickDay={handleOnClickDay}
+                  onClickDay={handleClickDay}
                 />
               </Paper>
             </Grid>

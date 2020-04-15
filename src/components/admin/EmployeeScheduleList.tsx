@@ -6,6 +6,7 @@ import { addDays, format, differenceInDays } from "date-fns";
 import jaLocale from "date-fns/locale/ja";
 import DateFnsUtils from "@date-io/date-fns";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import MUIDataTable, {
   MUIDataTableColumn,
   MUIDataTableOptions,
@@ -30,13 +31,12 @@ interface Props {
   data: EmployeeScheduleProps[];
 }
 
-interface ScheduleDateProps {
+interface State {
   startDate: Date;
   endDate: Date;
   columns: MUIDataTableColumn[];
   data: EmployeeScheduleProps[];
 }
-type PartialScheduleDateProps = Partial<ScheduleDateProps>;
 
 function getColumns(startDate: Date, endDate: Date): MUIDataTableColumn[] {
   const columns: MUIDataTableColumn[] = [];
@@ -64,37 +64,36 @@ export default function EmployeeScheduleList(props: Props): JSX.Element {
     { name: "userName", label: "従業員名" },
   ];
   const options: MUIDataTableOptions = {
-    filterType: "checkbox",
+    filterType: "multiselect",
     selectableRows: "none",
     downloadOptions: {
       filename: "employeeScheduleList.csv",
     },
   };
-  const [selectedDate, handleDateChange] = useState<ScheduleDateProps>({
+  const [values, setValues] = useState<State>({
     startDate: today,
     endDate: endDate,
     columns: initColumns.concat(getColumns(today, endDate)),
     data: props.data,
   });
-  const handleOnClickDay = (value: PartialScheduleDateProps): void => {
-    console.debug(`handleOnClick(${JSON.stringify(value)})`);
-    const startDate = value.startDate
-      ? value.startDate
-      : selectedDate.startDate;
-    let endDate = value.endDate ? value.endDate : selectedDate.endDate;
-    const initColumns = selectedDate.columns.slice(0, 2);
-    const data = selectedDate.data;
+  const handleChange = (prop: keyof State) => (
+    date: MaterialUiPickersDate
+  ): void => {
+    console.log(`${prop}: ${date}`);
+    const startDate = prop === "startDate" && date ? date : values.startDate;
+    let endDate = prop === "endDate" && date ? date : values.startDate;
     if (startDate.getTime() > endDate.getTime()) {
       endDate = addDays(
         startDate,
-        differenceInDays(selectedDate.endDate, selectedDate.startDate)
+        differenceInDays(values.endDate, values.startDate)
       );
     }
-    handleDateChange({
+    const initColumns = values.columns.slice(0, 2);
+    setValues({
       startDate: startDate,
       endDate: endDate,
       columns: initColumns.concat(getColumns(startDate, endDate)),
-      data: data,
+      data: values.data,
     });
   };
 
@@ -106,20 +105,16 @@ export default function EmployeeScheduleList(props: Props): JSX.Element {
             <Grid item xs={3}>
               <DatePicker
                 label="表示開始日"
-                value={selectedDate.startDate}
-                onChange={(value): void => {
-                  handleOnClickDay({ startDate: value as Date });
-                }}
+                value={values.startDate}
+                onChange={handleChange("startDate")}
                 showTodayButton={true}
               />
             </Grid>
             <Grid item xs={3}>
               <DatePicker
                 label="表示終了日"
-                value={selectedDate.endDate}
-                onChange={(value): void => {
-                  handleOnClickDay({ endDate: value as Date });
-                }}
+                value={values.endDate}
+                onChange={handleChange("endDate")}
                 showTodayButton={true}
               />
             </Grid>
@@ -131,8 +126,8 @@ export default function EmployeeScheduleList(props: Props): JSX.Element {
             />
             <MUIDataTable
               title={"従業員提出スケジュール"}
-              columns={selectedDate.columns}
-              data={selectedDate.data}
+              columns={values.columns}
+              data={values.data}
               options={options}
             />
           </Grid>

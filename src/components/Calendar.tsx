@@ -16,7 +16,7 @@ export interface CalendarProps {
   value: Date;
   title: string;
   tileContent?: ({ date, view }: CalendarTileProps) => JSX.Element;
-  handleOnClickDay: (value: Date) => void;
+  onClickDay: (value: Date) => void;
   minDate?: Date;
   maxDate?: Date;
 }
@@ -40,7 +40,7 @@ export default function ReactCalendar(props: CalendarProps): JSX.Element {
       <Calendar
         locale="ja-JP"
         calendarType="US"
-        onClickDay={props.handleOnClickDay}
+        onClickDay={props.onClickDay}
         value={props.value}
         tileClassName={tileClassName}
         tileContent={props.tileContent}

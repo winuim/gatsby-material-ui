@@ -2,6 +2,9 @@ import React from "react";
 import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import firebase from "gatsby-plugin-firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { navigate } from "gatsby";
 
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -45,7 +48,18 @@ export const homeListItems = (
       </ListItemIcon>
       <ListItemText primary="プロフィール" />
     </ListItemLink>
-    <ListItemLink href="/home#logout">
+    <ListItemLink
+      href="/home#logout"
+      onClick={(event) => {
+        event.preventDefault();
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            navigate("/signin");
+          });
+      }}
+    >
       <ListItemIcon>
         <ExitToAppIcon />
       </ListItemIcon>

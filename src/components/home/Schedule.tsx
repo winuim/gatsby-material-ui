@@ -129,11 +129,16 @@ function getUserAvailableDaysStr(
   return result;
 }
 
+interface State {
+  date: Date;
+  userAvailableDays: AvailableDayProps;
+}
+
 export default function MySchedule() {
   const classes = useStyles();
   const minDate = addDays(new Date(), 7);
   const maxDate = endOfMonth(addMonths(new Date(), 1));
-  const [selected, setSelected] = useState({
+  const [values, setVaues] = useState<State>({
     date: new Date(),
     userAvailableDays: initUserAvailableDays(minDate, maxDate),
   });
@@ -142,16 +147,16 @@ export default function MySchedule() {
     if (view != "month") {
       return <p>{"  "}</p>;
     }
-    const userAvailableDays = selected.userAvailableDays;
+    const userAvailableDays = values.userAvailableDays;
     return <p>{getUserAvailableDaysChar(userAvailableDays, date)}</p>;
   };
-  const handleOnClickDay = (value: Date): void => {
-    console.debug(`handleOnClick(${value})`);
+  const handleClickDay = (value: Date): void => {
+    console.debug(`handleClickDay(${value})`);
     const userAvailableDays = incrUserAvailableDaysChar(
-      selected.userAvailableDays,
+      values.userAvailableDays,
       value
     );
-    setSelected({
+    setVaues({
       date: value,
       userAvailableDays: userAvailableDays,
     });
@@ -161,11 +166,11 @@ export default function MySchedule() {
     const bodyMain = [
       "お疲れ様です。",
       "○ (空いてます): " +
-        getUserAvailableDaysStr(selected.userAvailableDays, 1).join(", "),
+        getUserAvailableDaysStr(values.userAvailableDays, 1).join(", "),
       "X (空いてません): " +
-        getUserAvailableDaysStr(selected.userAvailableDays, 3).join(", "),
+        getUserAvailableDaysStr(values.userAvailableDays, 3).join(", "),
       "△ (未定): " +
-        getUserAvailableDaysStr(selected.userAvailableDays, 2).join(", "),
+        getUserAvailableDaysStr(values.userAvailableDays, 2).join(", "),
       "よろしくお願いします。",
     ];
     const body: string = encodeURIComponent(bodyMain.join("\n"));
@@ -178,10 +183,10 @@ export default function MySchedule() {
         <Grid item xs={12} sm={6} lg={6}>
           <Paper className={classes.paper}>
             <ReactCalendar
-              value={selected.date}
+              value={values.date}
               title="スケジュール登録"
               tileContent={tileContent}
-              handleOnClickDay={handleOnClickDay}
+              onClickDay={handleClickDay}
               minDate={minDate}
               maxDate={maxDate}
             />
@@ -201,19 +206,19 @@ export default function MySchedule() {
                 </Typography>
                 <Typography variant="body2" component="p">
                   ○ (空いてます):{" "}
-                  {getUserAvailableDaysStr(selected.userAvailableDays, 1).join(
+                  {getUserAvailableDaysStr(values.userAvailableDays, 1).join(
                     ", "
                   )}
                 </Typography>
                 <Typography variant="body2" component="p">
                   X (空いてません):{" "}
-                  {getUserAvailableDaysStr(selected.userAvailableDays, 3).join(
+                  {getUserAvailableDaysStr(values.userAvailableDays, 3).join(
                     ", "
                   )}
                 </Typography>
                 <Typography variant="body2" component="p">
                   △ (未定):{" "}
-                  {getUserAvailableDaysStr(selected.userAvailableDays, 2).join(
+                  {getUserAvailableDaysStr(values.userAvailableDays, 2).join(
                     ", "
                   )}
                 </Typography>

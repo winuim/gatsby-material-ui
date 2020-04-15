@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { navigate } from "gatsby";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +13,9 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import firebase from "gatsby-plugin-firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 import Copyright from "../../components/Copyright";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,8 +58,24 @@ interface Props {
   forgot?: string;
 }
 
+interface State {
+  email: string;
+  password: string;
+}
+
 export default function SignInSide(props: Props) {
   const classes = useStyles();
+  const [values, setValues] = useState<State>({
+    email: "",
+    password: "",
+  });
+  const handleChange = (prop: keyof State) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    // console.log(`${prop}: ${event.target.value}`);
+    setValues({ ...values, [prop]: event.target.value });
+  };
+  const [user, loading, error] = useAuthState(firebase.auth());
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -69,7 +89,30 @@ export default function SignInSide(props: Props) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={async (event) => {
+              event.preventDefault();
+              firebase
+                .auth()
+                .signInWithEmailAndPassword(values.email, values.password)
+                .then((user) => {
+                  navigate("/home");
+                })
+                .catch(function (error) {
+                  // Handle Errors here.
+                  const errorCode = error.code;
+                  const errorMessage = error.message;
+                  if (errorCode === "auth/wrong-password") {
+                    alert("Wrong password.");
+                  } else {
+                    alert(errorMessage);
+                  }
+                  console.log(error);
+                });
+            }}
+          >
             <TextField
               variant="outlined"
               margin="normal"
@@ -80,6 +123,7 @@ export default function SignInSide(props: Props) {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={handleChange("email")}
             />
             <TextField
               variant="outlined"
@@ -91,6 +135,7 @@ export default function SignInSide(props: Props) {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={handleChange("password")}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -102,7 +147,6 @@ export default function SignInSide(props: Props) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              href={props.success ? props.success : "#"}
             >
               サインイン
             </Button>

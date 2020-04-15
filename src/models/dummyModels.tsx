@@ -1,5 +1,7 @@
 import faker from "faker/locale/ja";
+import { addDays, endOfMonth, format, startOfMonth } from "date-fns";
 
+import { shuffle } from "../helpers/arrayUtils";
 import {
   AvailableDayProps,
   EmployeeScheduleProps,
@@ -15,7 +17,6 @@ export const HolidaysModel: HolidaysModelProps = {
 
 export const EmployeeProfiles: ProfileModelProps[] = [...Array(1000)].map(
   (_, i) => {
-    faker.seed(i);
     return {
       userId: "U" + (i + 1).toString().padStart(10, "0"),
       firstName: faker.name.firstName(),
@@ -28,82 +29,27 @@ export const EmployeeProfiles: ProfileModelProps[] = [...Array(1000)].map(
 
 export const MyProfileModel: ProfileModelProps = EmployeeProfiles[0];
 
-export const EmployeeSchedules: EmployeeScheduleProps[] = [
-  {
-    userId: "U0000000001",
-    userName: "姓 名",
-    "2020-04-01": "○",
-    "2020-04-02": "△",
-    "2020-04-03": "X",
-    "2020-04-04": "○",
-    "2020-04-10": "○",
-    "2020-04-20": "○",
-  },
-  {
-    userId: "U0000000002",
-    userName: "user2",
-    "2020-04-10": "○",
-    "2020-04-20": "○",
-  },
-  {
-    userId: "U0000000003",
-    userName: "user3",
-  },
-  {
-    userId: "U0000000004",
-    userName: "user4",
-    "2020-04-11": "○",
-    "2020-04-21": "○",
-  },
-  {
-    userId: "U0000000005",
-    userName: "user5",
-  },
-  {
-    userId: "U0000000006",
-    userName: "user6",
-  },
-  {
-    userId: "U0000000007",
-    userName: "user7",
-    "2020-04-10": "○",
-    "2020-04-20": "○",
-  },
-  {
-    userId: "U0000000008",
-    userName: "user8",
-  },
-  {
-    userId: "U0000000009",
-    userName: "user9",
-  },
-  {
-    userId: "U0000000010",
-    userName: "user10",
-  },
-  {
-    userId: "U0000000011",
-    userName: "user11",
-  },
-  {
-    userId: "U0000000012",
-    userName: "user12",
-    "2020-04-10": "○",
-    "2020-04-20": "○",
-  },
-  {
-    userId: "U0000000013",
-    userName: "user13",
-  },
-  {
-    userId: "U0000000014",
-    userName: "user14",
-  },
-  {
-    userId: "U0000000015",
-    userName: "user15",
-  },
-];
+const initAvailables = ["○", "○", "○", "○", "○", "○", "○", "△", "X", ""];
+
+export const EmployeeSchedules: EmployeeScheduleProps[] = EmployeeProfiles.map(
+  (v, i) => {
+    const result: EmployeeScheduleProps = {
+      userId: v.userId,
+      userName: v.lastName + " " + v.firstName,
+    };
+    const randomAvailables = shuffle(initAvailables);
+    const today = new Date();
+    for (
+      let day = startOfMonth(today), i = 0;
+      day <= endOfMonth(today);
+      day = addDays(day, 1), i++
+    ) {
+      result[format(day, "yyyy-MM-dd")] =
+        randomAvailables[i % randomAvailables.length];
+    }
+    return result;
+  }
+);
 
 export const MyAvailableDaysModel: AvailableDayProps = {
   "2020-03": {
@@ -131,6 +77,11 @@ export const MyWorkingDayModels: Array<WorkReportProps> = [
   { workDate: "2020-04-08", workSiteId: "W0000000004" },
   { workDate: "2020-04-09", workSiteId: "W0000000004" },
   { workDate: "2020-04-10", workSiteId: "W0000000004" },
+  { workDate: "2020-04-11", workSiteId: "W0000000004" },
+  { workDate: "2020-04-12", workSiteId: "W0000000004" },
+  { workDate: "2020-04-13", workSiteId: "W0000000004" },
+  { workDate: "2020-04-14", workSiteId: "W0000000004" },
+  { workDate: "2020-04-15", workSiteId: "W0000000004" },
 ];
 
 export const WorkSiteModels: Array<WorkSiteProps> = [

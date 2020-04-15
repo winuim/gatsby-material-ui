@@ -3,6 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { useLocation } from "@reach/router";
 import { format } from "date-fns";
+import firebase from "gatsby-plugin-firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import Layout, { useStyles } from "../../layout/home";
 import SEO from "../../components/Seo";
@@ -25,7 +27,7 @@ const HomeIndexPage: React.FC = () => {
   const location = useLocation();
   const classes = useStyles();
   const [selected, setSelected] = useState(new Date());
-  const handleOnClickDay = (value: Date): void => {
+  const handleClickDay = (value: Date): void => {
     console.debug(`handleOnClick(${value})`);
     setSelected(value);
   };
@@ -51,6 +53,7 @@ const HomeIndexPage: React.FC = () => {
     }
     return <p>{"  "}</p>;
   };
+  const [user, loading, error] = useAuthState(firebase.auth());
 
   return (
     <div>
@@ -62,9 +65,9 @@ const HomeIndexPage: React.FC = () => {
               <Paper className={classes.paper}>
                 <ReactCalendar
                   value={selected}
-                  title="カレンダー"
+                  title={"カレンダー"}
                   tileContent={tileContent}
-                  handleOnClickDay={handleOnClickDay}
+                  onClickDay={handleClickDay}
                 />
               </Paper>
             </Grid>

@@ -20,14 +20,21 @@ export interface ProfileModelProps {
   memo?: string;
 }
 
-export interface AvailableDayMap {
-  [day: string]: {
-    available: number;
+export interface AvailableDayProps {
+  [month: string]: {
+    [day: string]: {
+      available: number;
+    };
   };
 }
 
-export interface AvailableDayProps {
-  [month: string]: AvailableDayMap;
+export interface EmployeeScheduleModelProps {
+  userId: string;
+  available: {
+    [month: string]: {
+      [day: string]: string;
+    };
+  };
 }
 
 export interface EmployeeScheduleProps {

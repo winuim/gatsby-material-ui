@@ -56,7 +56,7 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-theme-firebase",
+      resolve: "gatsby-plugin-firebase",
       options: {
         credentials: {
           apiKey: process.env.FIREBASE_API_KEY,
@@ -66,11 +66,8 @@ module.exports = {
           storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
           messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
           appId: process.env.FIREBASE_APP_ID,
-        },
-        loginPath: "/login",
-        loginRedirectPath: "/dashboard",
-        socialLogins: [],
-      },
+        }
+      }
     },
     "gatsby-plugin-top-layout",
     {
@@ -84,6 +81,6 @@ module.exports = {
     },
     // If you want to use styled components you should add the plugin here.
     // 'gatsby-plugin-styled-components',
-    "gatsby-plugin-netlify"
+    "gatsby-plugin-netlify",
   ]
 };
