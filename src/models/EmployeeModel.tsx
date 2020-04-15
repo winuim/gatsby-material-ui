@@ -1,11 +1,11 @@
 export interface ProfileModelProps {
   userId: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  displayName: string;
+  firstName?: string;
+  lastName?: string;
   firstKana?: string;
   lastKana?: string;
-  displayName?: string;
   birthDay?: Date;
   occupation?: string;
   address?: string;

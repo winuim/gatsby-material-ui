@@ -3,7 +3,6 @@ import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import firebase from "gatsby-plugin-firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { navigate } from "gatsby";
 
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
@@ -50,7 +49,7 @@ export const homeListItems = (
     </ListItemLink>
     <ListItemLink
       href="/home#logout"
-      onClick={(event) => {
+      onClick={(event): void => {
         event.preventDefault();
         firebase
           .auth()

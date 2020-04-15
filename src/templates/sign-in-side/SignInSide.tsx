@@ -14,7 +14,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import firebase from "gatsby-plugin-firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 import Copyright from "../../components/Copyright";
 
@@ -63,7 +62,7 @@ interface State {
   password: string;
 }
 
-export default function SignInSide(props: Props) {
+export default function SignInSide(props: Props): JSX.Element {
   const classes = useStyles();
   const [values, setValues] = useState<State>({
     email: "",
@@ -75,7 +74,6 @@ export default function SignInSide(props: Props) {
     // console.log(`${prop}: ${event.target.value}`);
     setValues({ ...values, [prop]: event.target.value });
   };
-  const [user, loading, error] = useAuthState(firebase.auth());
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -92,12 +90,12 @@ export default function SignInSide(props: Props) {
           <form
             className={classes.form}
             noValidate
-            onSubmit={async (event) => {
+            onSubmit={(event): void => {
               event.preventDefault();
               firebase
                 .auth()
                 .signInWithEmailAndPassword(values.email, values.password)
-                .then((user) => {
+                .then(() => {
                   navigate("/home");
                 })
                 .catch(function (error) {

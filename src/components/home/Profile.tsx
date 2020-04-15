@@ -5,6 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import firebase from "gatsby-plugin-firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import { ProfileModelProps } from "../../models/EmployeeModel";
 
@@ -35,6 +37,7 @@ interface Props {
 
 export default function MyProfile(props: Props): JSX.Element {
   const classes = useStyles();
+  const [user, loading, error] = useAuthState(firebase.auth());
 
   return (
     <React.Fragment>
@@ -43,6 +46,35 @@ export default function MyProfile(props: Props): JSX.Element {
           プロフィール
         </Typography>
         <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <TextField
+              id="uid"
+              name="uid"
+              label="UID"
+              fullWidth
+              value={user ? user.uid : "error"}
+              disabled
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="displayName"
+              name="displayName"
+              label="表示名"
+              fullWidth
+              value={user ? user.displayName : "error"}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              required
+              id="email"
+              name="email"
+              label="E-mailアドレス"
+              fullWidth
+              value={user ? user.email : "error"}
+            />
+          </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               required
@@ -81,25 +113,6 @@ export default function MyProfile(props: Props): JSX.Element {
               label="カナ(名)"
               fullWidth
               value={props.user ? props.user.firstKana : ""}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              id="displayName"
-              name="displayName"
-              label="表示名"
-              fullWidth
-              value={props.user ? props.user.displayName : ""}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="email"
-              name="email"
-              label="E-mailアドレス"
-              fullWidth
-              value={props.user ? props.user.email : "email address"}
             />
           </Grid>
         </Grid>
